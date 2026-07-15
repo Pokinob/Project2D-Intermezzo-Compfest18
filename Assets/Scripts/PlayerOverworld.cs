@@ -1,35 +1,50 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerOverworld : MonoBehaviour
 {
 
-    public float walkSpeed;
-    public float walkSpeedLossOnStop;
+    public float moveSpeed;
 
     Vector2 moveDirection;
     Rigidbody2D rigidBody;
+
+
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (moveDirection != Vector2.zero)
+        rigidBody.MovePosition(rigidBody.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    #region PlayerInput
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
-            rigidBody.linearVelocity = moveDirection * walkSpeed;
-            rigidBody.linearDamping = 0;
+            moveDirection = context.ReadValue<Vector2>();
         }
         else
         {
-            rigidBody.linearDamping = walkSpeedLossOnStop;
+            moveDirection = Vector2.zero;
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnSprint(InputAction.CallbackContext context)
     {
-        moveDirection = context.ReadValue<Vector2>();
+        if (context.performed)
+        {
+            moveSpeed += 2f;
+        }
+        else
+        {
+            moveSpeed -= 2f;
+        }
     }
+    #endregion
 }

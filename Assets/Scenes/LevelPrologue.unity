@@ -2160,7 +2160,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 34
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2530,7 +2530,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 6
+      m_TileSpriteIndex: 33
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2900,7 +2900,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 10
+      m_TileSpriteIndex: 32
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2920,7 +2920,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 8
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3390,7 +3390,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 5
+      m_TileSpriteIndex: 10
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3650,7 +3650,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 8
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4040,7 +4040,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 6
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -5110,7 +5110,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -7695,26 +7695,26 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 531
     m_Data: {fileID: 1758639549, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 8
+    m_Data: {fileID: 2027476266, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1563186555, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 548814203, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -1821778322, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
-  - m_RefCount: 8
-    m_Data: {fileID: 2027476266, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1127332609, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -1902562664, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 33
     m_Data: {fileID: 263122986, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -1993400204, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
+    m_Data: {fileID: -1821778322, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 29
     m_Data: {fileID: -866062460, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -1889534651, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
+    m_Data: {fileID: 1127332609, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 36
     m_Data: {fileID: 1487193617, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 1
@@ -7740,7 +7740,7 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: 548410198, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -2049314150, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
+    m_Data: {fileID: -1993400204, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: 1388734795, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 2
@@ -7757,12 +7757,12 @@ Tilemap:
     m_Data: {fileID: 1672329158, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   - m_RefCount: 10
     m_Data: {fileID: 343404946, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -1889534651, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -1902562664, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -2049314150, guid: d2951ad7d31c32449b54ab621f58735f, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 743
     m_Data:
@@ -25519,7 +25519,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 5.625
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -25583,8 +25583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280d734612a887da78a7d76eb0373a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerOverworld
-  walkSpeed: 5
-  walkSpeedLossOnStop: 25
+  moveSpeed: 5
 --- !u!114 &1792072982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25644,10 +25643,6 @@ MonoBehaviour:
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
-    m_ActionName: 'Player/Jump[/Keyboard/space]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
     m_ActionName: 'Player/Previous[/Keyboard/1]'
   - m_PersistentCalls:
@@ -25655,7 +25650,19 @@ MonoBehaviour:
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Keyboard/2]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1792072981}
+        m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
   - m_PersistentCalls:
