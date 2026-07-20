@@ -29,7 +29,7 @@ public class PlayerOverworld : MonoBehaviour
         {
             moveDirection = context.ReadValue<Vector2>();
         }
-        else
+        else if(context.canceled)
         {
             moveDirection = Vector2.zero;
         }
@@ -39,9 +39,10 @@ public class PlayerOverworld : MonoBehaviour
     {
         if (context.performed)
         {
+            Debug.Log("Sprint");
             moveSpeed += 2f;
         }
-        else
+        else if(context.canceled)
         {
             moveSpeed -= 2f;
         }
