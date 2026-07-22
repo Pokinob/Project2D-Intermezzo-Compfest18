@@ -1,5 +1,13 @@
-Hi chat
-aljfasf
-kjdlj
-six seven
-end
+
+INCLUDE  globals.ink
+
+-> main
+
+=== main ===
+
+Halo
+Namamu siapa
+oh ok
+fufufafa
+
+-> END

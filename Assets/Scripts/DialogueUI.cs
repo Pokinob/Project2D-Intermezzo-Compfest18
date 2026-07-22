@@ -2,24 +2,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
+using System;
 
 public class DialogueUI : MonoBehaviour
 {
     Story story;
 
-    public TMP_Text speakerText;
-    public TMP_Text mainText;
-    Button button;
+    [SerializeField]
+    private GameObject dialoguePanel;
+    [SerializeField]
+    private TMP_Text speakerText;
+    [SerializeField]
+    private TMP_Text mainText;
+    [SerializeField]
+    private PlayerOverworld _player;
 
     void Start()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(AdvanceDialogue);
-
-        gameObject.SetActive(false);
+        dialoguePanel.SetActive(false);
     }
 
-    void AdvanceDialogue()
+    public void AdvanceDialogue()
     {
         if (story.canContinue)
         {
@@ -27,14 +30,16 @@ public class DialogueUI : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            _player.playerState = PlayerState.Idle;
+            dialoguePanel.SetActive(false);
         }
     }
 
     public void RunDialogue(TextAsset inkAsset)
     {
+        _player.playerState = PlayerState.Interacting;
         story = new Story(inkAsset.text);
-        gameObject.SetActive(true);
+        dialoguePanel.SetActive(true);
 
         mainText.text = story.Continue();
     }

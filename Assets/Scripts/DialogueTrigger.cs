@@ -1,22 +1,37 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class DialogueTrigger : MonoBehaviour
+public class PlayerTrigger : MonoBehaviour
 {
-    public TextAsset inkAsset;
-
-    DialogueUI dialogueUI;
-
-    void Start()
-    {
-        GameObject dialogueObject = GameObject.FindGameObjectWithTag("DialogueUI");
-        dialogueUI = dialogueObject.GetComponent<DialogueUI>();
-    }
+    public GameObject Object;
+    [SerializeField]
+    private DialogueUI dialogueUI;
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if(col == null) return;
+        if(col.CompareTag("Interactable"))
+            Object = col.gameObject;
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if(col == null) return;
+        Object = null;
+    }
+
+    public void TriggerSystem(PlayerState playerState)
+    {
+
+        if(Object.GetComponent<dialogueData>() != null)
         {
-            dialogueUI.RunDialogue(inkAsset);
+            if(playerState == PlayerState.Idle)
+            dialogueUI.RunDialogue(Object.GetComponent<dialogueData>().inkAsset);
+            else
+            {
+                dialogueUI.AdvanceDialogue();
+            }
         }
     }
 }
