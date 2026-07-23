@@ -4,10 +4,18 @@ INCLUDE  globals.ink
 -> main
 
 === main ===
+// #speaker : Monbun
+Halo 
 
-Halo
-Namamu siapa
-oh ok
-fufufafa
+ * [what up n***a]
+ -> test1
+ * [hi]
+ -> test
+ 
+=== test ===
+very nice to meet you
+->END
 
--> END
+=== test1 ===
+ayo chill
+->END

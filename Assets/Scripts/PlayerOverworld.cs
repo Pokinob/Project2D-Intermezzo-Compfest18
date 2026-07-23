@@ -13,14 +13,9 @@ public class PlayerOverworld : MonoBehaviour
 
     public float moveSpeed;
 
-    Vector2 moveDirection;
-
     [SerializeField]
     private Rigidbody2D rigidBody;
     
-    [SerializeField]
-    private PlayerTrigger playerTrigger;
-
     [SerializeField]
     private bool isFreeze;
 
@@ -34,21 +29,21 @@ public class PlayerOverworld : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerState == PlayerState.Interacting) return; 
-        rigidBody.MovePosition(rigidBody.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        if(DialogueManager.GetInstance().dialogueIsPlaying) return;
+
+        updateMove();
     }
 
-    #region PlayerInput
-    public void OnMove(InputAction.CallbackContext context)
+    #region Movement
+
+    private void updateMove()
     {
-        if (isFreeze) return;
-        if (context.performed)
+        if (InputManager.GetInstance().GetMoveDirection() != Vector2.zero)
         {
-            moveDirection = context.ReadValue<Vector2>();
-        }
-        else if(context.canceled)
-        {
-            moveDirection = Vector2.zero;
+            rigidBody.MovePosition(rigidBody.position +
+                InputManager.GetInstance().GetMoveDirection() *
+                moveSpeed *
+                Time.fixedDeltaTime);
         }
     }
 
@@ -56,7 +51,6 @@ public class PlayerOverworld : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("Sprint");
             moveSpeed += 2f;
         }
         else if(context.canceled)
@@ -65,16 +59,6 @@ public class PlayerOverworld : MonoBehaviour
         }
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        //Debug.Log("Try Interact");
-        if (context.performed)
-        {
-            //Debug.Log("Try Interact");
-            if (playerTrigger.Object == null) return;
-                Debug.Log("Interacting with " + playerTrigger.Object.name);
-                playerTrigger.TriggerSystem(playerState);
-        }
-    }
+    
     #endregion
 }

@@ -1,37 +1,44 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerTrigger : MonoBehaviour
+public class DialogueTrigger : MonoBehaviour
 {
-    public GameObject Object;
-    [SerializeField]
-    private DialogueUI dialogueUI;
+    [Header("Dialogue Trigger Settings")]
+    private bool playerInRange;
 
-    void OnTriggerEnter2D(Collider2D col)
+    [Header("Ink Asset")]
+    [SerializeField] private TextAsset inkJSON;
+
+    private void Awake()
     {
-        if(col == null) return;
-        if(col.CompareTag("Interactable"))
-            Object = col.gameObject;
+        playerInRange = false;
     }
 
-    void OnTriggerExit2D(Collider2D col)
+    private void Update()
     {
-        if(col == null) return;
-        Object = null;
-    }
-
-    public void TriggerSystem(PlayerState playerState)
-    {
-
-        if(Object.GetComponent<dialogueData>() != null)
+        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
-            if(playerState == PlayerState.Idle)
-            dialogueUI.RunDialogue(Object.GetComponent<dialogueData>().inkAsset);
-            else
+            if(InputManager.GetInstance().GetInteractPressed())
             {
-                dialogueUI.AdvanceDialogue();
+                //Debug.Log("Dialogue Triggered");
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if(collider.CompareTag("Player"))
+        {
+            playerInRange = false;
         }
     }
 }
