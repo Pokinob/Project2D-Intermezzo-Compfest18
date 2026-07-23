@@ -4,18 +4,18 @@ INCLUDE  globals.ink
 -> main
 
 === main ===
-// #speaker : Monbun
-Halo 
-
- * [what up n***a]
- -> test1
- * [hi]
+#speaker:Monbun #layout:right
+Hello 
+#speaker:??? #layout:left
+Hi 
+#speaker:Monbun #layout:right
+Nice to meet you 
+How are you?
+ * [im good dawg]
+ -> test
+ * [im good]
  -> test
  
 === test ===
-very nice to meet you
-->END
-
-=== test1 ===
-ayo chill
+nice
 ->END

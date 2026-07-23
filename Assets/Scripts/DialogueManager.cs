@@ -12,17 +12,28 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI speakerNameText;
+    private Animator layoutAnimator;
+
 
     [Header("Choices UI")]
     [SerializeField] private Transform choiceTransform;
     [SerializeField] private GameObject choicePrefab;
-    
 
+    [Header("Ink Settings")]
     private Story currentStory;
+    private const string SPEAKER_TAG = "speaker";
+    private const string PORTRAIT_TAG = "portrait";
+    private const string LAYOUT_TAG = "layout";
 
+    [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
     public bool isChoiceDisplayed { get; private set; }
+    private bool isTyping;
+    private string currentText;
+    private Coroutine typingCoroutine;
     private static DialogueManager instance;
+
 
     private void Awake()
     {
@@ -40,9 +51,11 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        isTyping = false;
         isChoiceDisplayed = false;
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+        layoutAnimator = dialoguePanel.GetComponent<Animator>();
     }
 
     private void Update()
@@ -57,10 +70,11 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        Debug.Log(layoutAnimator.GetCurrentAnimatorStateInfo(0).IsName("Right"));
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-
+        dialogueText.text = "";
         ContinueStory();
     }
 
@@ -72,20 +86,78 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
     }
 
+
     private void ContinueStory()
     {
+        if (isTyping)
+        {
+            StopCoroutine(typingCoroutine);
+            dialogueText.text = currentText;
+            isTyping = false;
+            DisplayChoices();
+            return;
+        }
         if (currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
+            currentText = currentStory.Continue();
 
-            //display choices, if any, for this dialogue line
-            DisplayChoices();
+            if (currentStory.currentTags.Count > 0)
+                HandleTags(currentStory.currentTags);
+
+            //Debug.Log("Continue Story");
+            typingCoroutine = StartCoroutine(DisplayText(currentText));
+
         }
         else
         {
             StartCoroutine(ExitDialogueMode());
         }
     }
+
+    IEnumerator DisplayText(string currentText)
+    {
+        dialogueText.text = "";
+        isTyping = true;
+        foreach (char letter in currentText)
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+        isTyping = false;
+        DisplayChoices();
+    }
+
+    private void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            string[] splitTag = tag.Split(':');
+            if (splitTag.Length != 2)
+            {
+                Debug.LogWarning("Tag could not be parsed: " + tag);
+            }
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+
+            switch (tagKey)
+            {
+                case SPEAKER_TAG:
+                    speakerNameText.text = tagValue;
+                    break;
+                case PORTRAIT_TAG:
+                    // Handle portrait change (soon)
+                    break;
+                case LAYOUT_TAG:
+                    layoutAnimator.Play(tagValue);
+                    break;
+
+                default:
+                    Debug.LogWarning("Tag is not recognized: " + tag);
+                    break;
+            }
+        }
+    }
+
 
     private void clearChoices()
     {
@@ -97,9 +169,8 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayChoices()
     {
-        clearChoices();
         List<Choice> currentChoices = currentStory.currentChoices;
-        if(currentChoices.Count > 0)
+        if (currentChoices.Count > 0)
         {
             isChoiceDisplayed = true;
             for (int i = 0; i < currentChoices.Count; i++)
@@ -123,6 +194,7 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log("choice selected: " + choiceIndex);
         currentStory.ChooseChoiceIndex(choiceIndex);
+        clearChoices();
         ContinueStory();
         isChoiceDisplayed = false;
     }
