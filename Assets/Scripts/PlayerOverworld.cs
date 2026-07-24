@@ -3,12 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public enum PlayerState
-{
-    Idle,
-    Interacting
-}
-public class PlayerOverworld : MonoBehaviour
+public class PlayerOverworld : MonoBehaviour, IDataPersistence
 {
 
     public float moveSpeed;
@@ -19,12 +14,10 @@ public class PlayerOverworld : MonoBehaviour
     [SerializeField]
     private bool isFreeze;
 
-    public PlayerState playerState;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        playerState = PlayerState.Idle;
     }
 
     void FixedUpdate()
@@ -59,6 +52,17 @@ public class PlayerOverworld : MonoBehaviour
         }
     }
 
-    
+    public void LoadData(GameData data)
+    {
+        rigidBody.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = rigidBody.transform.position;
+    }
+
+
+
     #endregion
 }

@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
 
     public void SubmitPressed(InputAction.CallbackContext context)
     {
-        if (context.performed && !DialogueManager.GetInstance().isChoiceDisplayed)
+        if (context.performed)
         {
             submitPressed = true;
         }

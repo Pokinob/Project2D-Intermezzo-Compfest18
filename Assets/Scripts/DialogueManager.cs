@@ -2,11 +2,11 @@ using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IDataPersistence
 {
     [Header("Dialogue UI")]
 
@@ -25,10 +25,12 @@ public class DialogueManager : MonoBehaviour
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
     private const string LAYOUT_TAG = "layout";
+    private DialogueVariable dialogueVariables;
+    [SerializeField] private TextAsset loadglobalsInkFile;
+
 
     [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
-    public bool isChoiceDisplayed { get; private set; }
     private bool isTyping;
     private string currentText;
     private Coroutine typingCoroutine;
@@ -44,6 +46,11 @@ public class DialogueManager : MonoBehaviour
         instance = this;
     }
 
+    public void startGame()
+    {
+        dialogueVariables = new DialogueVariable(loadglobalsInkFile);
+    }
+
     public static DialogueManager GetInstance()
     {
         return instance;
@@ -52,7 +59,6 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         isTyping = false;
-        isChoiceDisplayed = false;
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         layoutAnimator = dialoguePanel.GetComponent<Animator>();
@@ -62,7 +68,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (!dialogueIsPlaying) return;
         
-        if(InputManager.GetInstance().GetSubmitPressed())
+        if(InputManager.GetInstance().GetSubmitPressed() && currentStory.currentChoices.Count == 0)
         {
             ContinueStory();
         }
@@ -70,10 +76,16 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-        Debug.Log(layoutAnimator.GetCurrentAnimatorStateInfo(0).IsName("Right"));
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+
+        dialogueVariables.StartListening(currentStory);
+        // Cara manggil function dari ink ke unity, misal di ink ada {playDebug("test")} maka akan memanggil function playDebug di unity
+        currentStory.BindExternalFunction("playDebug", (string debug) => {
+            Debug.Log(debug);
+        });
+
         dialogueText.text = "";
         ContinueStory();
     }
@@ -81,6 +93,8 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.2f);
+        dialogueVariables.StopListening(currentStory);
+        currentStory.UnbindExternalFunction("playDebug");
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -94,7 +108,10 @@ public class DialogueManager : MonoBehaviour
             StopCoroutine(typingCoroutine);
             dialogueText.text = currentText;
             isTyping = false;
-            DisplayChoices();
+
+            if(currentStory.currentChoices.Count > 0)
+                DisplayChoices();
+
             return;
         }
         if (currentStory.canContinue)
@@ -127,6 +144,8 @@ public class DialogueManager : MonoBehaviour
         DisplayChoices();
     }
 
+
+    // Handle tags from Ink story
     private void HandleTags(List<string> tags)
     {
         foreach (string tag in tags)
@@ -170,14 +189,11 @@ public class DialogueManager : MonoBehaviour
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
-        if (currentChoices.Count > 0)
+        clearChoices();
+        for (int i = 0; i < currentChoices.Count; i++)
         {
-            isChoiceDisplayed = true;
-            for (int i = 0; i < currentChoices.Count; i++)
-            {
-                int choiceIndex = i;
-                createChoices(() => MakeChoice(choiceIndex), currentChoices, choiceIndex);
-            }
+            int choiceIndex = i;
+            createChoices(() => MakeChoice(choiceIndex), currentChoices, choiceIndex);
         }
     }
 
@@ -196,6 +212,15 @@ public class DialogueManager : MonoBehaviour
         currentStory.ChooseChoiceIndex(choiceIndex);
         clearChoices();
         ContinueStory();
-        isChoiceDisplayed = false;
+    }
+
+    public void LoadData(GameData data)
+    {
+        dialogueVariables = new DialogueVariable(loadglobalsInkFile, data.inkData);
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        dialogueVariables.SaveData(ref data);
     }
 }
