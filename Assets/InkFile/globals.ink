@@ -1,2 +1,2 @@
 VAR Pokemon = ""
-VAR Item = 0
+VAR ItemP1 = 0

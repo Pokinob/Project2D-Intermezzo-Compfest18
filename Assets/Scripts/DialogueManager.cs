@@ -29,8 +29,10 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [SerializeField] private TextAsset loadglobalsInkFile;
 
 
+
     [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
+    public bool isClaim { get; set; } = false;
     private bool isTyping;
     private string currentText;
     private Coroutine typingCoroutine;
@@ -85,9 +87,23 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         currentStory.BindExternalFunction("playDebug", (string debug) => {
             Debug.Log(debug);
         });
+        currentStory.BindExternalFunction("claim", (string itemId) =>
+        {
+            Debug.Log(itemId);
+            StartCoroutine(ExitDialogueMode());
+            isClaim = true;
+            StartCoroutine(delayClaim());
+        });
 
         dialogueText.text = "";
         ContinueStory();
+    }
+
+
+    private IEnumerator delayClaim()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isClaim = false;   
     }
 
     private IEnumerator ExitDialogueMode()
