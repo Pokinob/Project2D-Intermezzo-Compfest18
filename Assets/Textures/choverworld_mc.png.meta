@@ -118,10 +118,10 @@ TextureImporter:
       name: choverworld_mc_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 0
-        width: 22
-        height: 96
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,10 +140,10 @@ TextureImporter:
       name: choverworld_mc_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 63
-        width: 22
-        height: 33
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,10 +162,10 @@ TextureImporter:
       name: choverworld_mc_2
       rect:
         serializedVersion: 2
-        x: 39
-        y: 31
-        width: 18
-        height: 33
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,10 +184,10 @@ TextureImporter:
       name: choverworld_mc_3
       rect:
         serializedVersion: 2
-        x: 69
-        y: 63
-        width: 22
-        height: 33
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,9 +206,9 @@ TextureImporter:
       name: choverworld_mc_4
       rect:
         serializedVersion: 2
-        x: 37
-        y: 0
-        width: 22
+        x: 32
+        y: 32
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -228,9 +228,9 @@ TextureImporter:
       name: choverworld_mc_5
       rect:
         serializedVersion: 2
-        x: 69
-        y: 0
-        width: 22
+        x: 64
+        y: 32
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -242,6 +242,72 @@ TextureImporter:
       bones: []
       spriteID: 5949491df048fc0c0800000000000000
       internalID: -4553275494772730731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5954e81c2e3a26e9d9234c1fe14593
+      internalID: 1779137899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78f6d1b9fc325d6e6ac8b56ba4fa16f2
+      internalID: 1079496688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67c907f5c0704f0188582aa79ae6b985
+      internalID: -1775531149
       vertices: []
       indices: 
       edges: []
@@ -258,7 +324,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       choverworld_mc_0: -5917441183659481041
       choverworld_mc_1: 1369978145046830254
@@ -266,6 +334,9 @@ TextureImporter:
       choverworld_mc_3: -6928095808091771022
       choverworld_mc_4: -2461441414090057430
       choverworld_mc_5: -4553275494772730731
+      choverworld_mc_6: 1779137899
+      choverworld_mc_7: 1079496688
+      choverworld_mc_8: -1775531149
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
