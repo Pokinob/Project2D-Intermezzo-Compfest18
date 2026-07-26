@@ -14,6 +14,12 @@ public class DialogueTrigger : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject claimObject;
     [SerializeField] private string isClaim;
 
+    [ContextMenu("Generate Unique IDitem")]
+    private void GenerateUniqueID()
+    {
+        isClaim = System.Guid.NewGuid().ToString();
+    }
+
     private void Awake()
     {
         playerInRange = false;
@@ -59,7 +65,7 @@ public class DialogueTrigger : MonoBehaviour, IDataPersistence
             {
                  if(data.itemData[isClaim] == false)
                  {
-                            claimObject.SetActive(false);
+                      claimObject.SetActive(false);
                  }
             }
         }

@@ -45,6 +45,7 @@ public class DialogueVariable : IDataPersistence
         Debug.Log($"Variable '{variableName}' changed to: {value}");
         if (variableDictionary.ContainsKey(variableName))
         {
+            Debug.Log(variableDictionary[variableName]);
             variableDictionary.Remove(variableName);
             variableDictionary.Add(variableName, value);
         }

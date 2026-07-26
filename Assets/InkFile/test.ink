@@ -1,5 +1,5 @@
 EXTERNAL playDebug(Debug)
-INCLUDE  Load_Global.ink
+INCLUDE  globals.ink
 
 {Pokemon == "" : -> main | -> already}
 

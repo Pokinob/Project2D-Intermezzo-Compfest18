@@ -90,6 +90,15 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         currentStory.BindExternalFunction("claim", (string itemId) =>
         {
             Debug.Log(itemId);
+            switch (itemId)
+            {
+                case "ItemPuzzle":
+                    break;
+
+                default:
+                    Debug.Log("Inventory Item");
+                    break;
+            }
             StartCoroutine(ExitDialogueMode());
             isClaim = true;
             StartCoroutine(delayClaim());
