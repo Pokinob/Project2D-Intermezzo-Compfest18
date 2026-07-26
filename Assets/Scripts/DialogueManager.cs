@@ -13,7 +13,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI speakerNameText;
-    private Animator layoutAnimator;
+    [SerializeField] private Animator portraitAnimator;
+    [SerializeField] private Animator layoutAnimator;
 
 
     [Header("Choices UI")]
@@ -25,7 +26,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
     private const string LAYOUT_TAG = "layout";
-    private DialogueVariable dialogueVariables;
+    private const string ShowPortrait_TAG = "showPortrait";
+    public DialogueVariable dialogueVariables { get; private set; }
     [SerializeField] private TextAsset loadglobalsInkFile;
 
 
@@ -63,7 +65,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         isTyping = false;
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
-        layoutAnimator = dialoguePanel.GetComponent<Animator>();
     }
 
     private void Update()
@@ -81,29 +82,11 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-
+        layoutAnimator.Play("left");
+        layoutAnimator.Play("show");
         dialogueVariables.StartListening(currentStory);
         // Cara manggil function dari ink ke unity, misal di ink ada {playDebug("test")} maka akan memanggil function playDebug di unity
-        currentStory.BindExternalFunction("playDebug", (string debug) => {
-            Debug.Log(debug);
-        });
-        currentStory.BindExternalFunction("claim", (string itemId) =>
-        {
-            Debug.Log(itemId);
-            switch (itemId)
-            {
-                case "ItemPuzzle":
-                    break;
-
-                default:
-                    Debug.Log("Inventory Item");
-                    break;
-            }
-            StartCoroutine(ExitDialogueMode());
-            isClaim = true;
-            StartCoroutine(delayClaim());
-        });
-
+        BindInkExternalFunction();
         dialogueText.text = "";
         ContinueStory();
     }
@@ -119,7 +102,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         yield return new WaitForSeconds(0.2f);
         dialogueVariables.StopListening(currentStory);
-        currentStory.UnbindExternalFunction("playDebug");
+        UnBindInkExternalFunction();
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -156,6 +139,46 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    private void BindInkExternalFunction()
+    {
+        currentStory.BindExternalFunction("claim", (string itemId) =>
+        {
+            Debug.Log(itemId);
+            switch (itemId)
+            {
+                case "ItemPuzzle":
+                    break;
+
+                default:
+                    Debug.Log("Inventory Item");
+                    break;
+            }
+            StartCoroutine(ExitDialogueMode());
+            isClaim = true;
+            StartCoroutine(delayClaim());
+        });
+
+        currentStory.BindExternalFunction("playQuest", (string Quest) =>
+        {
+            Debug.Log(Quest);
+            switch (Quest)
+            {
+                case "1":
+                    QuestManager.GetInstance().startQ1();
+                    break;
+                default:
+                    Debug.Log("Quest Not Found");
+                    break;
+            }
+        });
+    }
+
+    private void UnBindInkExternalFunction()
+    {
+        currentStory.UnbindExternalFunction("claim");
+        currentStory.UnbindExternalFunction("playQuest");
+    }
+
     IEnumerator DisplayText(string currentText)
     {
         dialogueText.text = "";
@@ -169,7 +192,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         DisplayChoices();
     }
 
-
     // Handle tags from Ink story
     private void HandleTags(List<string> tags)
     {
@@ -182,7 +204,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             }
             string tagKey = splitTag[0].Trim();
             string tagValue = splitTag[1].Trim();
-
+            Debug.Log("Tag Key: " + tagKey + ", Tag Value: " + tagValue);
             switch (tagKey)
             {
                 case SPEAKER_TAG:
@@ -194,7 +216,12 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);
                     break;
-
+                case ShowPortrait_TAG:
+                    {
+                        Debug.Log("show play");
+                        portraitAnimator.Play(tagValue);
+                        break;
+                    }
                 default:
                     Debug.LogWarning("Tag is not recognized: " + tag);
                     break;

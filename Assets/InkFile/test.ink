@@ -4,6 +4,7 @@ INCLUDE  globals.ink
 {Pokemon == "" : -> main | -> already}
 
 === main ===
+#showPortrait:show
 #speaker:Monbun #layout:right
 Hello
 What pokemon do you want?
@@ -22,6 +23,7 @@ I choose {poke}
 ->END
 
 === already ===
+#showPortrait:show
 #speaker:Monbun #layout:right
 Yoooo You already choose {Pokemon}
 ->END

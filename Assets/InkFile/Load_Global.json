@@ -1,1 +1,1 @@
-﻿{"inkVersion":21,"root":[["\n",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^","/str",{"VAR=":"Pokemon"},0,{"VAR=":"ItemP1"},false,{"VAR=":"P1Complete"},"/ev","end",null],"#f":1}],"listDefs":{}}
+﻿{"inkVersion":21,"root":[["\n",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^","/str",{"VAR=":"Pokemon"},0,{"VAR=":"ItemP1"},false,{"VAR=":"P1Complete"},false,{"VAR=":"P1Start"},1,{"VAR=":"Level"},"/ev","end",null],"#f":1}],"listDefs":{}}
