@@ -4,7 +4,7 @@ EXTERNAL claim(itemId)
 
 ===main===
 ~ ItemP1 = ItemP1 + 1
-#showPortrait:hide
+#layout:hide
 You Obtained Item
 ~ claim("ItemPuzzle")
 ->END

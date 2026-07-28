@@ -143,6 +143,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         currentStory.BindExternalFunction("claim", (string itemId) =>
         {
+            if (isClaim) return;
             Debug.Log(itemId);
             switch (itemId)
             {
@@ -216,12 +217,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);
                     break;
-                case ShowPortrait_TAG:
-                    {
-                        Debug.Log("show play");
-                        portraitAnimator.Play(tagValue);
-                        break;
-                    }
                 default:
                     Debug.LogWarning("Tag is not recognized: " + tag);
                     break;
