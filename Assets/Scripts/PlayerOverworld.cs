@@ -10,10 +10,12 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     [SerializeField]
     private Rigidbody2D rigidBody;
-    
+
     [SerializeField]
     private bool isFreeze;
 
+    [SerializeField]
+    private Animator animator;
 
     void Start()
     {
@@ -22,7 +24,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     void FixedUpdate()
     {
-        if(DialogueManager.GetInstance().dialogueIsPlaying) return;
+        if (DialogueManager.GetInstance().dialogueIsPlaying) return;
 
         updateMove();
     }
@@ -31,12 +33,23 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     private void updateMove()
     {
-        if (InputManager.GetInstance().GetMoveDirection() != Vector2.zero)
+        Vector2 moveDirection = InputManager.GetInstance().GetMoveDirection();
+        if (moveDirection != Vector2.zero)
         {
             rigidBody.MovePosition(rigidBody.position +
-                InputManager.GetInstance().GetMoveDirection() *
+                moveDirection *
                 moveSpeed *
                 Time.fixedDeltaTime);
+
+            animator.SetBool("IsWalking", true);
+            animator.SetFloat("DirectionX", moveDirection.x);
+            animator.SetFloat("DirectionY", moveDirection.y);
+        }
+        else
+        {
+            animator.SetFloat("LastDirectionX", animator.GetFloat("DirectionX"));
+            animator.SetFloat("LastDirectionY", animator.GetFloat("DirectionY"));
+            animator.SetBool("IsWalking", false);
         }
     }
 
@@ -46,7 +59,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
         {
             moveSpeed += 2f;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             moveSpeed -= 2f;
         }

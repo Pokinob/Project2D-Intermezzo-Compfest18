@@ -184,8 +184,8 @@ TextureImporter:
       name: choverworld_mc_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 96
+        y: 64
         width: 32
         height: 32
       alignment: 7
@@ -206,7 +206,7 @@ TextureImporter:
       name: choverworld_mc_4
       rect:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 32
         width: 32
         height: 32
@@ -228,7 +228,7 @@ TextureImporter:
       name: choverworld_mc_5
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 32
         width: 32
         height: 32
@@ -250,8 +250,8 @@ TextureImporter:
       name: choverworld_mc_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 64
+        y: 32
         width: 32
         height: 32
       alignment: 7
@@ -272,8 +272,8 @@ TextureImporter:
       name: choverworld_mc_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 96
+        y: 32
         width: 32
         height: 32
       alignment: 7
@@ -294,7 +294,7 @@ TextureImporter:
       name: choverworld_mc_8
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 0
         width: 32
         height: 32
@@ -308,6 +308,72 @@ TextureImporter:
       bones: []
       spriteID: 387ed3d30759ebb4aac06bdef2d7cf22
       internalID: -1775531149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd7d248c844ba63d7acb846d54144b1b
+      internalID: 5886489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a4a69f69e598d9e1b5a2ea710d7f496
+      internalID: 543782174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31f5623b343ec7e90941ad1ff98df63e
+      internalID: 164880187
       vertices: []
       indices: 
       edges: []
@@ -330,6 +396,8 @@ TextureImporter:
     nameFileIdTable:
       choverworld_mc_0: -5917441183659481041
       choverworld_mc_1: 1369978145046830254
+      choverworld_mc_10: 543782174
+      choverworld_mc_11: 164880187
       choverworld_mc_2: 1848138722279904066
       choverworld_mc_3: -6928095808091771022
       choverworld_mc_4: -2461441414090057430
@@ -337,6 +405,7 @@ TextureImporter:
       choverworld_mc_6: 1779137899
       choverworld_mc_7: 1079496688
       choverworld_mc_8: -1775531149
+      choverworld_mc_9: 5886489
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
