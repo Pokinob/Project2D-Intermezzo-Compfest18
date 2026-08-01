@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 
 public class PlayerOverworld : MonoBehaviour, IDataPersistence
@@ -12,10 +13,34 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
     private Rigidbody2D rigidBody;
 
     [SerializeField]
-    private bool isFreeze;
+    private bool isFreeze=false;
 
     [SerializeField]
     private Animator animator;
+
+    private Vector2 moveDirection;
+
+    public void EndTimeline()
+    {
+        StartCoroutine(WaitForEndTimeline());
+    }
+
+    private IEnumerator WaitForEndTimeline()
+    {
+        moveDirection = Vector2.zero;
+        yield return new WaitForSeconds(0.1f);
+        isFreeze = false;
+    }
+
+    public void StartTimeline() 
+    {
+        isFreeze = true;
+    }
+
+    private void Awake()
+    {
+        moveDirection = Vector2.zero;
+    }
 
     void Start()
     {
@@ -24,7 +49,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     void FixedUpdate()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying) return;
+        if (DialogueManager.GetInstance().dialogueIsPlaying || isFreeze) return;
 
         updateMove();
     }
@@ -33,14 +58,13 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     private void updateMove()
     {
-        Vector2 moveDirection = InputManager.GetInstance().GetMoveDirection();
+        moveDirection = InputManager.GetInstance().GetMoveDirection();
         if (moveDirection != Vector2.zero)
         {
             rigidBody.MovePosition(rigidBody.position +
                 moveDirection *
                 moveSpeed *
                 Time.fixedDeltaTime);
-
             animator.SetBool("IsWalking", true);
             animator.SetFloat("DirectionX", moveDirection.x);
             animator.SetFloat("DirectionY", moveDirection.y);
@@ -75,7 +99,42 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
         data.playerPosition = rigidBody.transform.position;
     }
 
+    #endregion
 
-
+    #region Animation On timeline
+    public void FaceUp()
+    {
+        //Debug.Log("FaceUp");
+        animator.SetBool("IsWalking", false);
+        animator.SetFloat("DirectionX", 0);
+        animator.SetFloat("DirectionY", 1);
+        animator.SetFloat("LastDirectionX", 0);
+        animator.SetFloat("LastDirectionY", 1);
+    }
+    public void FaceDown()
+    {
+        //Debug.Log("FaceDown");
+        animator.SetBool("IsWalking", false);
+        animator.SetFloat("DirectionX", 0);
+        animator.SetFloat("DirectionY", -1);
+        animator.SetFloat("LastDirectionX", 0);
+        animator.SetFloat("LastDirectionY", -1);
+    }
+    public void FaceLeft()
+    {
+        animator.SetBool("IsWalking", false);
+        animator.SetFloat("DirectionX", -1);
+        animator.SetFloat("DirectionY", 0);
+        animator.SetFloat("LastDirectionX", -1);
+        animator.SetFloat("LastDirectionY", 0);
+    }
+    public void FaceRight()
+    {
+        animator.SetBool("IsWalking", false);
+        animator.SetFloat("DirectionX", 1);
+        animator.SetFloat("DirectionY", 0);
+        animator.SetFloat("LastDirectionX", 1);
+        animator.SetFloat("LastDirectionY", 0);
+    }
     #endregion
 }

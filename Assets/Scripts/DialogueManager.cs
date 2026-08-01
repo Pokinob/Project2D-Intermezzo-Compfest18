@@ -53,6 +53,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public void startGame()
     {
         dialogueVariables = new DialogueVariable(loadglobalsInkFile);
+        ActiveCutscene.GetInstance().startCutscene();
     }
 
     public static DialogueManager GetInstance()
@@ -94,7 +95,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     private IEnumerator delayClaim()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         isClaim = false;   
     }
 
@@ -145,6 +146,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         {
             if (isClaim) return;
             Debug.Log(itemId);
+            isClaim = true;
             switch (itemId)
             {
                 case "ItemPuzzle":
@@ -155,7 +157,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                     break;
             }
             StartCoroutine(ExitDialogueMode());
-            isClaim = true;
             StartCoroutine(delayClaim());
         });
 

@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
         }
         else if (context.canceled)
         {
-            moveDirection = context.ReadValue<Vector2>();
+            moveDirection = Vector2.zero;
         }
     }
 
