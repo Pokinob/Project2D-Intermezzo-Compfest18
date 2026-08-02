@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DialogueUI
   - Interactable
+  - PushObject
   layers:
   - Default
   - TransparentFX

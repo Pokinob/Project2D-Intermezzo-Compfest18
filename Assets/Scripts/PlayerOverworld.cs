@@ -13,12 +13,19 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
     private Rigidbody2D rigidBody;
 
     [SerializeField]
+    private Collider2D playerCollider;
+
+    [SerializeField]
     private bool isFreeze=false;
 
     [SerializeField]
     private Animator animator;
 
+    [SerializeField]
+    private LayerMask pushableLayer;
+
     private Vector2 moveDirection;
+
 
     public void EndTimeline()
     {
@@ -49,7 +56,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     void FixedUpdate()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying || isFreeze) return;
+        if (DialogueManager.GetInstance().dialogueIsPlaying || isFreeze || InputManager.GetInstance().GetFreezeInput()) return;
 
         updateMove();
     }
@@ -61,6 +68,9 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
         moveDirection = InputManager.GetInstance().GetMoveDirection();
         if (moveDirection != Vector2.zero)
         {
+
+            checkPush();
+            
             rigidBody.MovePosition(rigidBody.position +
                 moveDirection *
                 moveSpeed *
@@ -74,6 +84,28 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
             animator.SetFloat("LastDirectionX", animator.GetFloat("DirectionX"));
             animator.SetFloat("LastDirectionY", animator.GetFloat("DirectionY"));
             animator.SetBool("IsWalking", false);
+        }
+    }
+
+    private void checkPush()
+    {
+        if ((moveDirection.x > 0 || moveDirection.x < 0) && (moveDirection.y > 0 || moveDirection.y < 0)) return;
+        //if(moveDirection.x < 0 && moveDirection.y < 0) return;
+        float offset = playerCollider.bounds.extents.x + 0.05f;
+
+        if (Mathf.Abs(moveDirection.y) > 0)
+            offset = playerCollider.bounds.extents.y + 0.05f;
+
+        Vector2 checkPos = (Vector2)transform.position + moveDirection * offset;
+        Collider2D hit = Physics2D.OverlapCircle(checkPos, 0.05f, pushableLayer);
+
+        if (hit != null)
+        {
+            if (hit.GetComponent<Boulder>() != null)
+            {
+                hit.GetComponent<Boulder>()?.Push(moveDirection);
+                return;
+            }
         }
     }
 

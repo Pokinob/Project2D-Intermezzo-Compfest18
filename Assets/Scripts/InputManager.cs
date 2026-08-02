@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +10,7 @@ public class InputManager : MonoBehaviour
     private Vector2 moveDirection = Vector2.zero;
     private bool interactPressed = false;
     private bool submitPressed = false;
-
+    private bool freezeInput = false;
     private static InputManager instance;
 
     private void Awake()
@@ -26,8 +27,28 @@ public class InputManager : MonoBehaviour
         return instance;
     }
 
+    public bool GetFreezeInput()
+    {
+        return freezeInput;
+    }
+
+    public void FreezeInput()
+    {
+        freezeInput = true;
+    }
+
+    public void UnfreezeInput()
+    {
+        freezeInput = false;
+    }
+
     public void MovePressed(InputAction.CallbackContext context)
     {
+        if (freezeInput)
+        {
+            moveDirection = Vector2.zero;
+            return;
+        }
         if (context.performed)
         {
             moveDirection = context.ReadValue<Vector2>();
@@ -40,6 +61,7 @@ public class InputManager : MonoBehaviour
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
     {
+        if (interactPressed) return;
         if (context.performed)
         {
             interactPressed = true;
@@ -52,6 +74,7 @@ public class InputManager : MonoBehaviour
 
     public void SubmitPressed(InputAction.CallbackContext context)
     {
+        if (submitPressed) return;
         if (context.performed)
         {
             submitPressed = true;

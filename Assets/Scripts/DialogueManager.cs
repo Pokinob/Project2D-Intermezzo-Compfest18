@@ -26,7 +26,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
     private const string LAYOUT_TAG = "layout";
-    private const string ShowPortrait_TAG = "showPortrait";
     public DialogueVariable dialogueVariables { get; private set; }
     [SerializeField] private TextAsset loadglobalsInkFile;
 
