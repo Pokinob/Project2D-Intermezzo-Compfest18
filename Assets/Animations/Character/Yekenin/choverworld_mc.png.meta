@@ -119,11 +119,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 68
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -141,11 +141,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 68
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -163,11 +163,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 68
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -185,11 +185,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 64
+        y: 68
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -207,11 +207,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 34
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -229,11 +229,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 32
+        y: 34
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -251,11 +251,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 34
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -273,11 +273,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 32
+        y: 34
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -297,9 +297,9 @@ TextureImporter:
         x: 0
         y: 0
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -319,9 +319,9 @@ TextureImporter:
         x: 32
         y: 0
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -341,9 +341,9 @@ TextureImporter:
         x: 64
         y: 0
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -363,9 +363,9 @@ TextureImporter:
         x: 96
         y: 0
         width: 32
-        height: 32
+        height: 34
       alignment: 9
-      pivot: {x: 0.5, y: 0.09}
+      pivot: {x: 0.5, y: 0.0882353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -392,7 +392,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":34.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0882352963089943},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":1,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       choverworld_mc_0: -5917441183659481041
       choverworld_mc_1: 1369978145046830254
