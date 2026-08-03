@@ -52,7 +52,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public void startGame()
     {
         dialogueVariables = new DialogueVariable(loadglobalsInkFile);
-        ActiveCutscene.GetInstance().startCutscene();
+        //ActiveCutscene.GetInstance().startCutscene();
     }
 
     public static DialogueManager GetInstance()
