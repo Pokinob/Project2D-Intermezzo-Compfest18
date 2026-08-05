@@ -122,12 +122,15 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape:
-      - - {x: 20, y: -59}
-        - {x: 11, y: -53}
-        - {x: -13, y: -53}
-        - {x: -22, y: -59}
+      - - {x: 20, y: -58}
+        - {x: 15, y: -49}
+        - {x: 5, y: -45}
+        - {x: -7, y: -45}
+        - {x: -12, y: -47}
+        - {x: -19, y: -53}
+        - {x: -23, y: -59}
         - {x: -18, y: -64}
-        - {x: 16, y: -64}
+        - {x: 17, y: -64}
       tessellationDetail: 0
       bones: []
       spriteID: e9f02482569fb6a50800000000000000
@@ -150,12 +153,12 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape:
-      - - {x: -13, y: -21}
+      - - {x: -21, y: -17}
         - {x: -21, y: -28}
         - {x: -17, y: -32}
         - {x: 17, y: -32}
         - {x: 21, y: -28}
-        - {x: 13, y: -21}
+        - {x: 21, y: -17}
       tessellationDetail: 0
       bones: []
       spriteID: 4f2875c4bacb81e60800000000000000
@@ -182,8 +185,8 @@ TextureImporter:
         - {x: -18, y: -32}
         - {x: 18, y: -32}
         - {x: 21, y: -28}
-        - {x: 13, y: -21}
-        - {x: -13, y: -21}
+        - {x: 13, y: -11}
+        - {x: -13, y: -12}
       tessellationDetail: 0
       bones: []
       spriteID: 42bb75a7258d66d00800000000000000
@@ -289,7 +292,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -311,7 +314,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -333,7 +336,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -355,7 +358,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
