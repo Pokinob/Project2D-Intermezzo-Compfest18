@@ -61,7 +61,6 @@ public class InputManager : MonoBehaviour
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
     {
-        if (interactPressed) return;
         if (context.performed)
         {
             interactPressed = true;
@@ -74,7 +73,6 @@ public class InputManager : MonoBehaviour
 
     public void SubmitPressed(InputAction.CallbackContext context)
     {
-        if (submitPressed) return;
         if (context.performed)
         {
             submitPressed = true;
