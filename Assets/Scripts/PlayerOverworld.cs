@@ -29,13 +29,6 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     public void EndTimeline()
     {
-        StartCoroutine(WaitForEndTimeline());
-    }
-
-    private IEnumerator WaitForEndTimeline()
-    {
-        moveDirection = Vector2.zero;
-        yield return new WaitForSeconds(0.1f);
         isFreeze = false;
     }
 

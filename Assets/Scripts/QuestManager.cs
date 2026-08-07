@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
+using Unity.VisualScripting;
 
 public class QuestManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private List<GameObject> objQuest1;
     [SerializeField] private List<GameObject> objQuest2;
     [SerializeField] private TextAsset inkFilesP2;
+    [SerializeField] private TextAsset inkFilesP7;
 
     private void Awake()
     {
@@ -59,6 +61,11 @@ public class QuestManager : MonoBehaviour
             }
         }
         
+    }
+
+    public void startP7()
+    {
+        SimonSays.GetInstance().triggerPuzzle();
     }
 
 }

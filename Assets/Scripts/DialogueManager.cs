@@ -33,6 +33,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
+    public bool canContinue;
     public bool isClaim { get; set; } = false;
     private bool isTyping;
     private string currentText;
@@ -64,12 +65,14 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         isTyping = false;
         dialogueIsPlaying = false;
+        canContinue = true;
         dialoguePanel.SetActive(false);
     }
 
     private void Update()
     {
         if (!dialogueIsPlaying) return;
+        if (!canContinue) return;
         
         if(InputManager.GetInstance().GetSubmitPressed() && currentStory.currentChoices.Count == 0)
         {
@@ -166,6 +169,9 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             {
                 case "1":
                     QuestManager.GetInstance().startQ1();
+                    break;
+                case "7":
+                    QuestManager.GetInstance().startP7();
                     break;
                 default:
                     Debug.Log("Quest Not Found");
