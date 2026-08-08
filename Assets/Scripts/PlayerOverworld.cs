@@ -15,8 +15,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
     [SerializeField]
     private Collider2D playerCollider;
 
-    [SerializeField]
-    private bool isFreeze=false;
+    public bool isFreeze=false;
 
     [SerializeField]
     private Animator animator;
@@ -26,6 +25,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     private Vector2 moveDirection;
 
+    private static PlayerOverworld instance;
 
     public void EndTimeline()
     {
@@ -39,7 +39,18 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
+        if(instance != null)
+        {
+            Debug.LogWarning("Multiple instances of PlayerOverworld found!");
+            return;
+        }
+        instance = this;
         moveDirection = Vector2.zero;
+    }
+
+    public static PlayerOverworld GetInstance()
+    {
+        return instance;
     }
 
     void Start()
