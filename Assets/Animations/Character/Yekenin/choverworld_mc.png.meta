@@ -119,7 +119,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 68
+        y: 102
         width: 32
         height: 34
       alignment: 9
@@ -141,7 +141,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 68
+        y: 102
         width: 32
         height: 34
       alignment: 9
@@ -163,7 +163,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 68
+        y: 102
         width: 32
         height: 34
       alignment: 9
@@ -185,7 +185,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 68
+        y: 102
         width: 32
         height: 34
       alignment: 9
@@ -207,7 +207,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 34
+        y: 68
         width: 32
         height: 34
       alignment: 9
@@ -229,7 +229,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 34
+        y: 68
         width: 32
         height: 34
       alignment: 9
@@ -251,7 +251,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 34
+        y: 68
         width: 32
         height: 34
       alignment: 9
@@ -273,7 +273,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 34
+        y: 68
         width: 32
         height: 34
       alignment: 9
@@ -295,7 +295,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 34
         width: 32
         height: 34
       alignment: 9
@@ -317,7 +317,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 34
         width: 32
         height: 34
       alignment: 9
@@ -339,7 +339,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 0
+        y: 34
         width: 32
         height: 34
       alignment: 9
@@ -361,7 +361,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 34
         width: 32
         height: 34
       alignment: 9
@@ -374,6 +374,72 @@ TextureImporter:
       bones: []
       spriteID: 31f5623b343ec7e90941ad1ff98df63e
       internalID: 164880187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b103157b02a2d6bf5a288d0cc5445d69
+      internalID: -1802293374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57f6a38a87c649a35ae0f5e365a54920
+      internalID: -203131578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 34
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bcdea9775880c0ec8e9a2625763cc68
+      internalID: -1256034704
       vertices: []
       indices: 
       edges: []
@@ -398,6 +464,9 @@ TextureImporter:
       choverworld_mc_1: 1369978145046830254
       choverworld_mc_10: 543782174
       choverworld_mc_11: 164880187
+      choverworld_mc_12: -1802293374
+      choverworld_mc_13: -203131578
+      choverworld_mc_14: -1256034704
       choverworld_mc_2: 1848138722279904066
       choverworld_mc_3: -6928095808091771022
       choverworld_mc_4: -2461441414090057430
