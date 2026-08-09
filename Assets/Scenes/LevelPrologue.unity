@@ -546,116 +546,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &56687201
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 56687202}
-  - component: {fileID: 56687204}
-  - component: {fileID: 56687203}
-  m_Layer: 0
-  m_Name: hiddenCutscene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &56687202
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56687201}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8498993, y: 2.8212967, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1195258197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &56687203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56687201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 0e588408c9eaf5e46a7be5f8fb2266db, type: 2}
-    - {fileID: 11400000, guid: 4d49c6e873ad3074f8ea8c8efed3ec22, type: 2}
-    - {fileID: 11400000, guid: 59aa99e4d7a1c224c9a654bbc4e9321e, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: StartTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: EndTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: FaceUp
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!320 &56687204
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56687201}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: cba197983de0d844fab53838df20cf60, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings: []
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &66465161
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,7 +2110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 277682194}
   - component: {fileID: 277682196}
-  - component: {fileID: 277682195}
+  - component: {fileID: 277682197}
   m_Layer: 0
   m_Name: entry1
   m_TagString: Untagged
@@ -2243,19 +2133,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 952402981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &277682195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277682193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e3785dd56ed5b4fa23d2af9334549b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  entryNumber: 1
 --- !u!61 &277682196
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2302,6 +2179,56 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &277682197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277682193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8249004c19f264585b6010e59a1b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::entryScript
+  entryNumber: 1
+  changeScene: 0
+  isPuzzle: 1
+  walkDirFix: {x: 0, y: 1}
+  fadeInScene: {fileID: 1775031789}
+  fadeOutScene: {fileID: 546504131}
+  entryFix: {fileID: 2103894011}
+--- !u!1 &301153677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 301153678}
+  m_Layer: 0
+  m_Name: finishPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &301153678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301153677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.77, y: -28.17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 952402981}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &324853818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2945,7 +2872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 416103249}
   - component: {fileID: 416103251}
-  - component: {fileID: 416103250}
+  - component: {fileID: 416103252}
   m_Layer: 0
   m_Name: start
   m_TagString: Untagged
@@ -2968,19 +2895,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 952402981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &416103250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 416103248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e3785dd56ed5b4fa23d2af9334549b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  entryNumber: 0
 --- !u!61 &416103251
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3027,6 +2941,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &416103252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416103248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8249004c19f264585b6010e59a1b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::entryScript
+  entryNumber: 0
+  changeScene: 0
+  isPuzzle: 1
+  walkDirFix: {x: 0, y: 1}
+  fadeInScene: {fileID: 1775031789}
+  fadeOutScene: {fileID: 546504131}
+  entryFix: {fileID: 2103894011}
 --- !u!1 &432108831
 GameObject:
   m_ObjectHideFlags: 0
@@ -31344,129 +31277,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &614686292
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 614686293}
-  - component: {fileID: 614686295}
-  - component: {fileID: 614686294}
-  m_Layer: 0
-  m_Name: afterCutscene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &614686293
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614686292}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1195258197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &614686294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614686292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 0e588408c9eaf5e46a7be5f8fb2266db, type: 2}
-    - {fileID: 11400000, guid: 4d49c6e873ad3074f8ea8c8efed3ec22, type: 2}
-    - {fileID: 11400000, guid: 59aa99e4d7a1c224c9a654bbc4e9321e, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: StartTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: EndTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: FaceUp
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!320 &614686295
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614686292}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: a4d791cbe80c37a4db36131387cf50fa, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 7478578922697009514, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -1888899263169666450, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: 4722674950995053850, guid: 4e46dba24d8d8fe40837ab3fa52cbb26, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -5787975173147429446, guid: 4e46dba24d8d8fe40837ab3fa52cbb26, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -4330996157788719110, guid: a4d791cbe80c37a4db36131387cf50fa, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -3348471050277722690, guid: a4d791cbe80c37a4db36131387cf50fa, type: 2}
-    value: {fileID: 1792072987}
-  m_ExposedReferences:
-    m_References:
-    - 8aa3c07477712ce4db425cfcadbb2928: {fileID: 546504130}
 --- !u!1 &615911517
 GameObject:
   m_ObjectHideFlags: 0
@@ -112486,7 +112296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 785324877}
   - component: {fileID: 785324879}
-  - component: {fileID: 785324878}
+  - component: {fileID: 785324880}
   m_Layer: 0
   m_Name: entry2
   m_TagString: Untagged
@@ -112509,19 +112319,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 952402981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &785324878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 785324876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e3785dd56ed5b4fa23d2af9334549b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  entryNumber: 2
 --- !u!61 &785324879
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -112568,6 +112365,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &785324880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785324876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8249004c19f264585b6010e59a1b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::entryScript
+  entryNumber: 2
+  changeScene: 0
+  isPuzzle: 1
+  walkDirFix: {x: 1, y: 0}
+  fadeInScene: {fileID: 1775031789}
+  fadeOutScene: {fileID: 546504131}
+  entryFix: {fileID: 1133082656}
 --- !u!1 &810531600
 GameObject:
   m_ObjectHideFlags: 0
@@ -113042,11 +112858,9 @@ MonoBehaviour:
   hiddenPattern: 3232
   patternList: 
   hiddenPatternList: 
-  entryCutscene: {fileID: 1761046973}
-  hiddenCutscene: {fileID: 56687204}
-  afterCutscene: {fileID: 614686295}
-  exitPuzzle: {fileID: 1283224412}
-  fadeEntry: {fileID: 1775031789}
+  startPos: {fileID: 416103248}
+  finishPos: {fileID: 301153677}
+  hiddenPos: {fileID: 1935867725}
 --- !u!4 &952402981
 Transform:
   m_ObjectHideFlags: 0
@@ -113065,7 +112879,8 @@ Transform:
   - {fileID: 785324877}
   - {fileID: 2103894012}
   - {fileID: 1133082657}
-  - {fileID: 1195258197}
+  - {fileID: 301153678}
+  - {fileID: 1935867726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &966610425
@@ -113805,7 +113620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1133082657}
   - component: {fileID: 1133082659}
-  - component: {fileID: 1133082658}
+  - component: {fileID: 1133082660}
   m_Layer: 0
   m_Name: entry4
   m_TagString: Untagged
@@ -113828,19 +113643,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 952402981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1133082658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133082656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e3785dd56ed5b4fa23d2af9334549b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  entryNumber: 4
 --- !u!61 &1133082659
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -113887,6 +113689,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1133082660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133082656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8249004c19f264585b6010e59a1b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::entryScript
+  entryNumber: 4
+  changeScene: 0
+  isPuzzle: 1
+  walkDirFix: {x: -1, y: 0}
+  fadeInScene: {fileID: 1775031789}
+  fadeOutScene: {fileID: 546504131}
+  entryFix: {fileID: 785324876}
 --- !u!1 &1190774368
 GameObject:
   m_ObjectHideFlags: 0
@@ -114032,41 +113853,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190774368}
   m_CullTransparentMesh: 1
---- !u!1 &1195258196
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1195258197}
-  m_Layer: 0
-  m_Name: Cutscene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1195258197
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195258196}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1761046971}
-  - {fileID: 1283224414}
-  - {fileID: 614686293}
-  - {fileID: 56687202}
-  m_Father: {fileID: 952402981}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1213097671
 GameObject:
   m_ObjectHideFlags: 0
@@ -119296,140 +119082,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271499593}
   m_CullTransparentMesh: 1
---- !u!1 &1283224411
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1283224414}
-  - component: {fileID: 1283224412}
-  - component: {fileID: 1283224413}
-  m_Layer: 0
-  m_Name: exitCutscene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!320 &1283224412
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283224411}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 4e46dba24d8d8fe40837ab3fa52cbb26, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 7478578922697009514, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -1888899263169666450, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: 4722674950995053850, guid: 4e46dba24d8d8fe40837ab3fa52cbb26, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -5787975173147429446, guid: 4e46dba24d8d8fe40837ab3fa52cbb26, type: 2}
-    value: {fileID: 1792072987}
-  m_ExposedReferences:
-    m_References:
-    - ee69e15f505724243bd83c19d9fd50d0: {fileID: 546504130}
---- !u!114 &1283224413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283224411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 0e588408c9eaf5e46a7be5f8fb2266db, type: 2}
-    - {fileID: 11400000, guid: 4d49c6e873ad3074f8ea8c8efed3ec22, type: 2}
-    - {fileID: 11400000, guid: 59aa99e4d7a1c224c9a654bbc4e9321e, type: 2}
-    - {fileID: 11400000, guid: ed918e349bab2b847a0beb99d14deda6, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: StartTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: EndTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: FaceUp
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: FaceDown
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!4 &1283224414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283224411}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1195258197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1284455891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135561,121 +135213,6 @@ MonoBehaviour:
   choicePrefab: {fileID: 7545143350618969519, guid: 2349b16da300a2b468dcd167d22ea1e4, type: 3}
   loadglobalsInkFile: {fileID: 4900000, guid: 90fa604616652f64ba6754fdfe1c6e3c, type: 3}
   canContinue: 0
---- !u!1 &1761046970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1761046971}
-  - component: {fileID: 1761046973}
-  - component: {fileID: 1761046972}
-  m_Layer: 0
-  m_Name: entryCutscene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1761046971
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761046970}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1195258197}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1761046972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761046970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 0e588408c9eaf5e46a7be5f8fb2266db, type: 2}
-    - {fileID: 11400000, guid: 4d49c6e873ad3074f8ea8c8efed3ec22, type: 2}
-    - {fileID: 11400000, guid: 59aa99e4d7a1c224c9a654bbc4e9321e, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: StartTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: EndTimeline
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1792072981}
-          m_TargetAssemblyTypeName: PlayerOverworld, Assembly-CSharp
-          m_MethodName: FaceUp
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!320 &1761046973
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761046970}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 7478578922697009514, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-    value: {fileID: 1792072987}
-  - key: {fileID: -1888899263169666450, guid: 0be8609044c6910429f689494ff44c00, type: 2}
-    value: {fileID: 1792072987}
-  m_ExposedReferences:
-    m_References:
-    - c3f857574ab19a844a19aa9434b6563a: {fileID: 546504130}
 --- !u!1 &1775031787
 GameObject:
   m_ObjectHideFlags: 0
@@ -137085,6 +136622,37 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1935867725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935867726}
+  m_Layer: 0
+  m_Name: hiddenPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1935867726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935867725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.49, y: -5.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 952402981}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974837613
 GameObject:
   m_ObjectHideFlags: 0
@@ -138190,7 +137758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2103894012}
   - component: {fileID: 2103894014}
-  - component: {fileID: 2103894013}
+  - component: {fileID: 2103894015}
   m_Layer: 0
   m_Name: entry3
   m_TagString: Untagged
@@ -138213,19 +137781,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 952402981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2103894013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103894011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e3785dd56ed5b4fa23d2af9334549b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  entryNumber: 3
 --- !u!61 &2103894014
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138272,6 +137827,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2103894015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103894011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8249004c19f264585b6010e59a1b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::entryScript
+  entryNumber: 3
+  changeScene: 0
+  isPuzzle: 1
+  walkDirFix: {x: 0, y: -1}
+  fadeInScene: {fileID: 1775031789}
+  fadeOutScene: {fileID: 546504131}
+  entryFix: {fileID: 277682193}
 --- !u!1 &2106082539
 GameObject:
   m_ObjectHideFlags: 0

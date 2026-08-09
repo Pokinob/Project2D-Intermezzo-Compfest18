@@ -9,8 +9,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     public float moveSpeed;
 
-    [SerializeField]
-    private Rigidbody2D rigidBody;
+    public Rigidbody2D rigidBody;
 
     [SerializeField]
     private Collider2D playerCollider;
@@ -89,6 +88,31 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
             animator.SetFloat("LastDirectionY", animator.GetFloat("DirectionY"));
             animator.SetBool("IsWalking", false);
         }
+    }
+
+    public void forceMove(Vector2 targetPosition, float duration)
+    {
+        StartCoroutine(forceMoveCor(targetPosition, duration));
+    }
+
+    private IEnumerator forceMoveCor(Vector2 targetPosition, float duration)
+    {
+        animator.SetBool("IsWalking", true);
+        animator.SetFloat("DirectionX", targetPosition.x);
+        animator.SetFloat("DirectionY", targetPosition.y);
+        float elapsedTime = 0f;
+        while (elapsedTime < duration) {
+            rigidBody.MovePosition(rigidBody.position +
+            targetPosition *
+            moveSpeed *
+            Time.fixedDeltaTime);
+            elapsedTime += Time.deltaTime;
+
+            yield return new WaitForFixedUpdate();
+        }
+        animator.SetFloat("LastDirectionX", targetPosition.x);
+        animator.SetFloat("LastDirectionY", targetPosition.y);
+        animator.SetBool("IsWalking", false);
     }
 
     private void checkPush()

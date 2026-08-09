@@ -11,11 +11,9 @@ public class P3Manager : MonoBehaviour
     [SerializeField] private string hiddenPattern;
     [SerializeField] List<char> patternList;
     [SerializeField] List<char> hiddenPatternList;
-    [SerializeField] private PlayableDirector entryCutscene;
-    [SerializeField] private PlayableDirector hiddenCutscene;
-    [SerializeField] private PlayableDirector afterCutscene;
-    [SerializeField] private PlayableDirector exitPuzzle;
-    [SerializeField] private PlayableDirector fadeEntry;
+    [SerializeField] private GameObject startPos;
+    [SerializeField] private GameObject finishPos;
+    [SerializeField] private GameObject hiddenPos;
     private bool hiddenActive = false;
     private bool normalActive = false;
     private bool puzzleCompleted = false;
@@ -34,10 +32,8 @@ public class P3Manager : MonoBehaviour
         return instance;
     }
 
-    public IEnumerator resetPuzzle()
+    public void resetPuzzle()
     {
-        fadeEntry.Play();
-        yield return new WaitForSeconds(1f);
         hiddenActive = false;
         normalActive = false;
         patternList = new List<char>(Pattern.ToCharArray());
@@ -45,17 +41,13 @@ public class P3Manager : MonoBehaviour
         {
             hiddenPatternList = new List<char>(hiddenPattern.ToCharArray());
         }
-        entryCutscene.Play();
     }
 
-    public IEnumerator checkEntry(int entryNumber)
+    public GameObject checkEntry(int entryNumber)
     {
-        fadeEntry.Play();
-        yield return new WaitForSeconds(1f);
         if (puzzleCompleted)
         {
-            exitPuzzle.Play();
-            yield return null;
+            return startPos;
         }
         char expectedEntry='\0';
         char expectedHiddenEntry='\0';
@@ -67,6 +59,7 @@ public class P3Manager : MonoBehaviour
         {
             expectedHiddenEntry = hiddenPatternList[0];
         }
+        //cek normalPattern dulu, kalau ndak ada ke hiddenPattern
         if (patternList.Count > 0)
         {
             if (expectedEntry == entryNumber.ToString()[0] && !hiddenActive)
@@ -77,48 +70,52 @@ public class P3Manager : MonoBehaviour
                 if (patternList.Count == 0)
                 {
                     Debug.Log("Pattern completed!");
-                    afterCutscene.Play();
-                    yield return null;
+                    return finishPos;
                 }
                 else
                 {
-                    entryCutscene.Play();
+                    return null;
                 }
                 
             }else if (!hiddenActive && normalActive)
             {
-                exitPuzzle.Play();
-                yield return null;
+                return startPos;
             }
-        if (hiddenPatternList.Count>0)
+        }
+
+        //Kalau bukan normalPattern, cek hiddenPattern
+        if (hiddenPatternList.Count > 0)
         {
-            if(expectedHiddenEntry == entryNumber.ToString()[0] && !normalActive)
+            if (expectedHiddenEntry == entryNumber.ToString()[0] && !normalActive)
             {
                 hiddenActive = true;
                 Debug.Log("Correct hidden entry: " + entryNumber);
+
                 hiddenPatternList.RemoveAt(0);
+
                 if (hiddenPatternList.Count == 0)
                 {
                     Debug.Log("Hidden pattern completed!");
-                    hiddenCutscene.Play();
-                    yield return null;
-                } else
+                    return hiddenPos;
+                }
+                else
                 {
-                    entryCutscene.Play();
-                    yield return null;
-                    }
-            } else if (!normalActive && hiddenActive) {
-                    exitPuzzle.Play();
-                    yield return null;
+                    return null;
                 }
             }
+            else if (!normalActive && hiddenActive)
+            {
+                return startPos;
+            }
         }
+
+        //Kalau bukan normalPattern dan hiddenPattern, return ke startPos
         if (!hiddenActive && !normalActive)
         {
-            exitPuzzle.Play();
-            yield return null;
+            return startPos;
         }
+        //ini buat safety aja, kalau ga return ntar error
+        return null;
     }
-
 
 }
