@@ -59,6 +59,11 @@ public class DialogueVariable : IDataPersistence
         }
     }
 
+    public void forceVariable(Story story, string key, Ink.Runtime.Object value)
+    {
+        story.variablesState.SetGlobal(key, value);
+    }
+
     public void LoadData(GameData data)
     {
         //nothing to load, as the global variables are already loaded in the dialoguemanager

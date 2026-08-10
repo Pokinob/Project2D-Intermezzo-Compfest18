@@ -34,9 +34,12 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
     public bool canContinue;
+    private string namaMc = "???";
     public bool isClaim { get; set; } = false;
     private bool isTyping;
     private string currentText;
+    [SerializeField]private TextMeshProUGUI inputNama;
+    [SerializeField] private GameObject inputPanel;
     private Coroutine typingCoroutine;
     private static DialogueManager instance;
 
@@ -85,8 +88,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-        layoutAnimator.Play("left");
-        layoutAnimator.Play("show");
         dialogueVariables.StartListening(currentStory);
         // Cara manggil function dari ink ke unity, misal di ink ada {playDebug("test")} maka akan memanggil function playDebug di unity
         BindInkExternalFunction();
@@ -178,12 +179,19 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                     break;
             }
         });
+        currentStory.BindExternalFunction("inputName", () =>
+        {
+            inputPanel.gameObject.SetActive(true);
+            PlayerOverworld.GetInstance().isFreeze = true;
+            canContinue = false;
+        });
     }
 
     private void UnBindInkExternalFunction()
     {
         currentStory.UnbindExternalFunction("claim");
         currentStory.UnbindExternalFunction("playQuest");
+        currentStory.UnbindExternalFunction("inputName");
     }
 
     IEnumerator DisplayText(string currentText)
@@ -215,8 +223,29 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             switch (tagKey)
             {
                 case SPEAKER_TAG:
-                    speakerNameText.text = tagValue;
-                    break;
+                    {
+                        if (tagValue == "???")
+                        {
+                            if (((Ink.Runtime.StringValue)dialogueVariables.variableDictionary["MCName"]).value != "???")
+                            {
+                                namaMc = ((Ink.Runtime.StringValue)dialogueVariables.variableDictionary["MCName"]).value;
+                            }
+                            if (namaMc != "???")
+                            {
+                                speakerNameText.text = namaMc;
+                            }
+                            else
+                            {
+                                Debug.Log("Blm ada nama");
+                                speakerNameText.text = "???";
+                            }
+                        }
+                        else
+                        {
+                            speakerNameText.text = tagValue;
+                        }
+                        break;
+                    }
                 case PORTRAIT_TAG:
                     // Handle portrait change (soon)
                     break;
@@ -264,6 +293,21 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         //Debug.Log("choice selected: " + choiceIndex);
         currentStory.ChooseChoiceIndex(choiceIndex);
         clearChoices();
+        ContinueStory();
+    }
+
+    public void InputName()
+    {
+        if (inputNama.text == null) return;
+
+        namaMc = inputNama.text;
+        Ink.Runtime.Object val = new Ink.Runtime.StringValue(namaMc);
+        dialogueVariables.variableDictionary.Remove("MCName");
+        dialogueVariables.variableDictionary.Add("MCName",  new Ink.Runtime.StringValue(namaMc));
+        dialogueVariables.forceVariable(currentStory,"MCName", val);
+        canContinue = true;
+        PlayerOverworld.GetInstance().isFreeze = false;
+        inputPanel.SetActive(false);
         ContinueStory();
     }
 

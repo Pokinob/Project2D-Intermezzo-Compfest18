@@ -52,7 +52,13 @@ public class entryScript : MonoBehaviour
                     }
                     else
                     {
-                        P3Manager.GetInstance().resetPuzzle();
+                        entryPoint = P3Manager.GetInstance().resetPuzzle();
+                        walkDir = Vector2.down;
+                        if (entryPoint == null)
+                        {
+                            entryPoint = entryFix;
+                            walkDir = walkDirFix;
+                        }
                     }
                     StartCoroutine(delayEntry());
                 }

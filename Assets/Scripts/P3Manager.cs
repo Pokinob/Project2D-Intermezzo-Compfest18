@@ -17,6 +17,7 @@ public class P3Manager : MonoBehaviour
     private bool hiddenActive = false;
     private bool normalActive = false;
     private bool puzzleCompleted = false;
+    private bool hiddenClaim = false;
     private void Awake()
     {
         if(instance != null)
@@ -32,15 +33,20 @@ public class P3Manager : MonoBehaviour
         return instance;
     }
 
-    public void resetPuzzle()
+    public GameObject resetPuzzle()
     {
+        if (puzzleCompleted)
+        {
+            return startPos;
+        }
         hiddenActive = false;
         normalActive = false;
         patternList = new List<char>(Pattern.ToCharArray());
-        if (DialogueManager.GetInstance().dialogueVariables.variableDictionary["claimP3"])
+        if (!((Ink.Runtime.BoolValue)DialogueManager.GetInstance().dialogueVariables.variableDictionary["claimP3"]).value)
         {
             hiddenPatternList = new List<char>(hiddenPattern.ToCharArray());
         }
+        return null;
     }
 
     public GameObject checkEntry(int entryNumber)
@@ -70,6 +76,7 @@ public class P3Manager : MonoBehaviour
                 if (patternList.Count == 0)
                 {
                     Debug.Log("Pattern completed!");
+                    puzzleCompleted = true;
                     return finishPos;
                 }
                 else
@@ -96,6 +103,10 @@ public class P3Manager : MonoBehaviour
                 if (hiddenPatternList.Count == 0)
                 {
                     Debug.Log("Hidden pattern completed!");
+                    hiddenClaim = true;
+                    Ink.Runtime.Object variable = new Ink.Runtime.BoolValue(true);
+                    DialogueManager.GetInstance().dialogueVariables.variableDictionary.Remove("claimP3");
+                    DialogueManager.GetInstance().dialogueVariables.variableDictionary.Add("claimP3", variable);
                     return hiddenPos;
                 }
                 else
@@ -111,6 +122,10 @@ public class P3Manager : MonoBehaviour
 
         //Kalau bukan normalPattern dan hiddenPattern, return ke startPos
         if (!hiddenActive && !normalActive)
+        {
+            return startPos;
+        }
+        if (hiddenClaim)
         {
             return startPos;
         }
