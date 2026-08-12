@@ -10,7 +10,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private List<GameObject> objQuest2;
     [SerializeField] private TextAsset inkFilesP2;
     [SerializeField] private TextAsset inkFilesP7;
-
+    [SerializeField] private TextAsset inkFilesP4;
     private void Awake()
     {
         if(instance != null)
@@ -61,6 +61,17 @@ public class QuestManager : MonoBehaviour
             }
         }
         
+    }
+
+    public void startP4()
+    {
+        for (int i = 1; i <= 3; i++)
+        {
+            int ranDigit = Random.Range(0, 9);
+            Ink.Runtime.Object value = new Ink.Runtime.IntValue(ranDigit);
+            DialogueManager.GetInstance().dialogueVariables.variableDictionary.Remove($"P4Digit{i}");
+            DialogueManager.GetInstance().dialogueVariables.variableDictionary.Add($"P4Digit{i}", value);
+        }
     }
 
     public void startP7()
