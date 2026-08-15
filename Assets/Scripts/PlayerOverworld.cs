@@ -24,7 +24,10 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     private Vector2 moveDirection;
 
+    public Vector2 lastDirection;
+
     private static PlayerOverworld instance;
+
 
     public void EndTimeline()
     {
@@ -84,15 +87,23 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
         }
         else
         {
+            lastDirection = new Vector2(animator.GetFloat("DirectionX"), animator.GetFloat("DirectionY"));
             animator.SetFloat("LastDirectionX", animator.GetFloat("DirectionX"));
             animator.SetFloat("LastDirectionY", animator.GetFloat("DirectionY"));
             animator.SetBool("IsWalking", false);
         }
     }
 
+    
+
     public void forceMove(Vector2 targetPosition, float duration)
     {
         StartCoroutine(forceMoveCor(targetPosition, duration));
+    }
+
+    public Vector2 GetLastDirection()
+    {
+        return lastDirection;
     }
 
     private IEnumerator forceMoveCor(Vector2 targetPosition, float duration)

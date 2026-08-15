@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
     private Vector2 moveDirection = Vector2.zero;
     private bool interactPressed = false;
     private bool submitPressed = false;
+    private bool selectPressed = false;
     private bool freezeInput = false;
     private static InputManager instance;
 
@@ -81,6 +82,23 @@ public class InputManager : MonoBehaviour
         {
             submitPressed = false;
         }
+    }
+
+    public void SelectPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            selectPressed = true;
+        }
+        else if (context.canceled)
+        {
+            selectPressed = false;
+        }
+    }
+
+    public bool GetSelectPressed()
+    {
+        return selectPressed;
     }
 
     public Vector2 GetMoveDirection()

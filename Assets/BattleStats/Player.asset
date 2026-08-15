@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::BattleStats
   maxHealth: 20
-  attack: 4
   defense: 0
-  accuracy: 0
-  evade: 0
+  evade: 50
+  Skills:
+  - type: 0
+    damage: 1
+    heal: 0
+    accuracy: 100
+    priority: 0
+    cooldown: 1
+    cooldownRemaining: 0
