@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour, IDataPersistence
@@ -15,6 +16,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private Animator portraitAnimator;
     [SerializeField] private Animator layoutAnimator;
+    public PlayableDirector fadeInScene;
+    public PlayableDirector fadeOutScene;
 
 
     [Header("Choices UI")]
@@ -34,7 +37,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
     public bool canContinue;
-    private string namaMc = "???";
+    public string namaMc = "???";
     public bool isClaim { get; set; } = false;
     private bool isTyping;
     private string currentText;

@@ -16,8 +16,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
 
     public bool isFreeze=false;
 
-    [SerializeField]
-    private Animator animator;
+    public Animator animator;
 
     [SerializeField]
     private LayerMask pushableLayer;

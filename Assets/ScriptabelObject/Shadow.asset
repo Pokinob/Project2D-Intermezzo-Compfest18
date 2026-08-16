@@ -21,7 +21,7 @@ MonoBehaviour:
   Skills:
   - type: 0
     name: Punch
-    damage: 1
+    damage: 10
     heal: 0
     accuracy: 100
     priority: 1
@@ -33,5 +33,5 @@ MonoBehaviour:
     heal: 0
     accuracy: 100
     priority: 10
-    cooldown: 1
+    cooldown: 3
     cooldownRemaining: 0

@@ -5,19 +5,29 @@ using UnityEngine;
 
 public class TriggerBattle : MonoBehaviour
 {
+    [System.Serializable]
+    public class BattleCount
+    {
+        public BattleStats[] enemyStats;
+        public List<GameObject> enemyPosition;
+        public BattleCount(BattleCount other)
+        {
+            enemyStats = other.enemyStats;
+            enemyPosition = other.enemyPosition;
+        }
+    }
+
     private bool isTriggered = false;
     private Coroutine coroutine;
     [SerializeField] private int tryRng;
     [SerializeField] private int minRng;
     [SerializeField] private int maxRng;
-    [SerializeField] private bool isBattleActive = false;
-    [SerializeField] private BattleStats[] enemyStats;
     [SerializeField] private GameObject playerPos;
-    [SerializeField] private List<GameObject> enemyPosition;
+    [SerializeField] private List<BattleCount> battleCounts = new List<BattleCount>();
 
     private void Update()
     {
-        if (isTriggered && InputManager.GetInstance().GetMoveDirection() != Vector2.zero && coroutine == null && !isBattleActive)
+        if (isTriggered && InputManager.GetInstance().GetMoveDirection() != Vector2.zero && coroutine == null && !BattleManager.GetInstance().isBattleActive)
         {
             coroutine = StartCoroutine(checkRng());
         }
@@ -28,9 +38,9 @@ public class TriggerBattle : MonoBehaviour
         int rng = Random.Range(minRng, maxRng);
         if (rng > tryRng)
         {
-            isBattleActive = true;
             Debug.Log($"Starting battle! {rng}");
-            BattleManager.GetInstance().StartBattle(enemyStats, enemyPosition, playerPos);
+            int randomCount = Random.Range(0, 2);
+            BattleManager.GetInstance().StartBattle(battleCounts[randomCount].enemyStats, battleCounts[randomCount].enemyPosition, playerPos);
             PlayerOverworld.GetInstance().isFreeze = true;
             minRng = 0;
         }

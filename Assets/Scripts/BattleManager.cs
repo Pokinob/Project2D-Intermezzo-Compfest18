@@ -88,7 +88,10 @@ public class BattleManager : MonoBehaviour
     private bool canClickSkill = true;
     private bool chooseTarget = false;
     private bool enemyTurnInProgress = false;
+    public bool isBattleActive = false;
     private Coroutine skillCoroutine;
+    private Coroutine deadCoroutine;
+    private Coroutine attackMissCoroutine;
     private static BattleManager instance;
 
     public static BattleManager GetInstance()
@@ -149,6 +152,7 @@ public class BattleManager : MonoBehaviour
 
     public void StartBattle(BattleStats[] enemyStats, List<GameObject> enemyPositions, GameObject playerPos)
     {
+        isBattleActive = true;
         resultBattle = result.neutral;
         selectedTargetIndex = 0;
         skillPanel.SetActive(false);
@@ -159,8 +163,6 @@ public class BattleManager : MonoBehaviour
         enemies = new List<BattleParticipant>();
         enemyPosition = new List<GameObject>();
         highlightTarget = new List<GameObject>();
-        currentPlayerPosition = new Vector2(PlayerOverworld.GetInstance().transform.position.x, PlayerOverworld.GetInstance().transform.position.y);
-        PlayerOverworld.GetInstance().transform.position = playerPos.transform.position;
         switch (face)
         {
             case facing.up:
@@ -182,68 +184,115 @@ public class BattleManager : MonoBehaviour
         healthPlayerSlider.maxValue = player.maxHealth;
         healthPlayerSlider.value = player.health;
         healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
-        int index = 0;
-        foreach (BattleStats enemyStat in enemyStats)
-        {
-            BattleParticipant enemy = new BattleParticipant(enemyStat);
-            enemyPosition.Add(Instantiate(enemyStat.prefab, enemyPositions[index].transform.position, Quaternion.identity));
-            highlightTarget.Add(enemyPositions[index].transform.Find("select").gameObject);
-            enemies.Add(enemy);
-            index++;
-        }
-        StartCoroutine(delayShow());
+        StartCoroutine(transitionBeginBattle(playerPos, enemyStats, enemyPositions));
     }
 
-    private IEnumerator delayShow()
+    private IEnumerator transitionBeginBattle(GameObject playerPos, BattleStats[] enemyStats, List<GameObject> enemyPositions)
     {
+        DialogueManager.GetInstance().fadeInScene.Play();
+        yield return new WaitForSeconds(0.2f);
+        currentPlayerPosition = new Vector2(PlayerOverworld.GetInstance().transform.position.x, PlayerOverworld.GetInstance().transform.position.y);
+        PlayerOverworld.GetInstance().transform.position = playerPos.transform.position;
+        yield return new WaitForSeconds(0.8f);
+        DialogueManager.GetInstance().fadeOutScene.Play();
+        yield return new WaitUntil(() => DialogueManager.GetInstance().fadeOutScene.state != UnityEngine.Playables.PlayState.Playing);
         battleState = BattleState.Player;
         BattleUI.SetActive(true);
         buttonBattle.SetActive(false);
         textBattle.SetActive(true);
-        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Enemy Approaching...";
-        yield return new WaitForSeconds(2f);
+        int index = 0;
+        foreach (BattleStats enemyStat in enemyStats)
+        {
+            BattleParticipant enemy = new BattleParticipant(enemyStat);
+            GameObject enemyGameObject = Instantiate(enemyStat.prefab, enemyPositions[index].transform.position, Quaternion.identity);
+            Transform canvas = enemyGameObject.transform.Find("Canvas");
+            canvas.transform.localPosition = Vector3.zero;
+            canvas.TransformVector(new Vector3(3, 3, 0));
+            enemyPosition.Add(enemyGameObject);
+            enemyPosition[index].GetComponent<infoEnemy>().enemyHp.maxValue = enemy.maxHealth;
+            enemyPosition[index].GetComponent<infoEnemy>().enemyHp.value = enemy.health;
+            enemyPosition[index].GetComponent<infoEnemy>().enemyName.text = enemy.nameChar;
+            enemyPosition[index].GetComponent<infoEnemy>().enemyHPpoint.text = $"{enemy.health}/{enemy.maxHealth}";
+            highlightTarget.Add(enemyPositions[index].transform.Find("select").gameObject);
+            enemies.Add(enemy);
+            index++;
+        }
+        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        string text = "Enemy Approaching...";
+        foreach(char c in text)
+        {
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitForSeconds(0.2f);
         textBattle.SetActive(false);
         buttonBattle.SetActive(true);
     }
-
     public void EndBattle()
     {
         StartCoroutine(resultShow());
+        isBattleActive = false;
         battleState = BattleState.noFight;
     }
 
     private IEnumerator resultShow()
     {
-        yield return new WaitUntil(() => skillCoroutine == null);
+        yield return new WaitUntil(() => skillCoroutine == null && deadCoroutine == null);
         textBattle.SetActive(true);
         buttonBattle.SetActive(false);
         if (resultBattle == result.win)
         {
-            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "You Win!";
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+            string text = "You Win!";
+            foreach (char c in text)
+            {
+                textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+                yield return new WaitForSeconds(0.05f);
+            }
+
         }
         else if (resultBattle == result.lose)
         {
-            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "You Lose!";
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+            string text = "You Lose!";
+            PlayerOverworld.GetInstance().animator.Play("Dead");
+            foreach (char c in text)
+            {
+                textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+                yield return new WaitForSeconds(0.05f);
+            }
         }
-        yield return new WaitForSeconds(2f);
-        for(int i = 0; i < enemyPosition.Count; i++)
-        {
-            Destroy(enemyPosition[i]);
-        }
+        yield return new WaitForSeconds(0.5f);
         BattleUI.SetActive(false);
+        DialogueManager.GetInstance().fadeInScene.Play();
+        yield return new WaitForSeconds(0.3f);
+        foreach (GameObject enemyGO in enemyPosition)
+        {
+            Destroy(enemyGO);
+        }
         PlayerOverworld.GetInstance().transform.position = currentPlayerPosition;
+        yield return new WaitForSeconds(0.8f);
+        DialogueManager.GetInstance().fadeOutScene.Play();
         PlayerOverworld.GetInstance().isFreeze = false;
         currentPlayerPosition = Vector2.zero;
+        PlayerOverworld.GetInstance().animator.Play("Idle");
     }
 
     private IEnumerator enemyTurn()
     {
         //Debug.Log("Enemy turn!");
         bool checkEnemyAlive = false;
-        enemies = enemies.OrderByDescending(x => x.speed).ToList();
+        if(resultBattle != result.neutral)
+        {
+            yield break;
+        }
         foreach (BattleParticipant enemy in enemies)
         {
-            if(enemy.health <= 0)
+            if (resultBattle != result.neutral)
+            {
+                yield break;
+            }
+            if (enemy.health <= 0)
             {
                 continue;
             }
@@ -304,9 +353,14 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitUntil(() => skillCoroutine == null);
             }
         }
+        if (resultBattle != result.neutral)
+        {
+            yield break;
+        }
         if (!checkEnemyAlive)
         {
             resultBattle = result.win;
+            yield return new WaitForSeconds(0.2f);
             EndBattle();
         }
         else
@@ -318,7 +372,8 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator changeState()
     {
-        yield return new WaitUntil(() => skillCoroutine == null);
+        yield return new WaitUntil(() => skillCoroutine == null && deadCoroutine == null && attackMissCoroutine == null);
+        enemies = enemies.OrderByDescending(x => x.speed).ToList();
         yield return new WaitForSeconds(0.5f);
         if (battleState == BattleState.Player)
         {
@@ -339,8 +394,14 @@ public class BattleManager : MonoBehaviour
     {
         buttonBattle.SetActive(false);
         textBattle.SetActive(true);
-        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"{ownerName} used {skillName}!";
-        yield return new WaitForSeconds(1.5f);
+        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        string text = $"{ownerName} used {skillName}!";
+        foreach (char c in text)
+        {
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitForSeconds(0.5f);
         skillCoroutine = null;
     }
     
@@ -352,7 +413,7 @@ public class BattleManager : MonoBehaviour
             return;
         }
         BattleParticipant target = enemies[targetIndex];
-        PlayerAttack(target, moveIndex);
+        PlayerAttack(target, moveIndex, targetIndex);
     }
 
     public void showSkill()
@@ -365,6 +426,7 @@ public class BattleManager : MonoBehaviour
         foreach (var skill in player.skillset)
         {
             skillObj[index].SetActive(true);
+            skillObj[index].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = skill.name;
             GameObject coolDownPanel = skillObj[index].transform.Find("CooldownPanel").gameObject;
             if (skill.cooldownRemaining <= 0)
             {
@@ -399,16 +461,17 @@ public class BattleManager : MonoBehaviour
         showTarget();
     }
 
-    void PlayerAttack(BattleParticipant target, int moveIndex)
+    void PlayerAttack(BattleParticipant target, int moveIndex, int targetIndex)
     {
-        skillCoroutine = StartCoroutine(useSkillUI(player.skillset[moveIndex].name, "???"));
+        enemyPosition[targetIndex].GetComponent<Animator>().SetBool("getSelect", false);
+        skillCoroutine = StartCoroutine(useSkillUI(player.skillset[moveIndex].name, ((Ink.Runtime.StringValue)DialogueManager.GetInstance().dialogueVariables.variableDictionary["MCName"]).value));
         player.skillset[moveIndex].cooldownRemaining = player.skillset[moveIndex].cooldown;
         int checkAcc = Random.Range(target.evade, 100);
         int playerAcc = Random.Range(player.skillset[moveIndex].accuracy, 100);
         //Debug.Log($"Player accuracy: {playerAcc}, Target evade: {checkAcc}");
         if (playerAcc < checkAcc)
         {
-            StartCoroutine(attackMiss());
+            attackMissCoroutine = StartCoroutine(attackMiss());
             StartCoroutine(changeState());
             foreach (var skill in player.skillset)
             {
@@ -419,12 +482,17 @@ public class BattleManager : MonoBehaviour
             }
             return;
         }
+        enemyPosition[targetIndex].GetComponent<Animator>().SetTrigger("GetHit");
         target.health -= player.skillset[moveIndex].damage;
+        enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
+        enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
         //Debug.Log($"Target health after attack: {target.health}");
         if (target.health <= 0)
         {
             target.health = 0;
-            Debug.Log("Enemy defeated!");
+            enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
+            enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
+            deadCoroutine = StartCoroutine(deadEnemy(targetIndex));
         }
         foreach (var skill in player.skillset)
         {
@@ -434,6 +502,28 @@ public class BattleManager : MonoBehaviour
             }
         }
         StartCoroutine(changeState());
+    }
+
+    private IEnumerator deadEnemy(int targetIndex)
+    {
+        yield return new WaitUntil(() => skillCoroutine == null);
+        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        string text = $"{enemies[targetIndex].nameChar} defeated!";
+        enemyPosition[targetIndex].GetComponent<Animator>().Play("Dead");
+        foreach (char c in text)
+        {
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+            yield return new WaitForSeconds(0.05f);
+        }
+        enemies.RemoveAt(targetIndex);
+        GameObject enemyRemove = enemyPosition[targetIndex];
+        GameObject highlightRemove = highlightTarget[targetIndex];
+        highlightTarget.RemoveAt(targetIndex);
+        enemyPosition.RemoveAt(targetIndex);
+        Destroy(enemyRemove);
+        //Destroy(highlightRemove);
+        yield return new WaitForSeconds(0.2f);
+        deadCoroutine = null;
     }
 
     public void PlayerGetDamage(int damage, int accuracy)
@@ -446,42 +536,64 @@ public class BattleManager : MonoBehaviour
             return;
         }
         //Debug.Log("Attack hit!");
+        PlayerOverworld.GetInstance().animator.SetTrigger("GetHit");
         player.health -= damage;
         healthPlayerSlider.value = (float)player.health;
         healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
-        Debug.Log($"Player health after attack: {player.health}");
+        //Debug.Log($"Player health after attack: {player.health}");
         if (player.health <= 0)
         {
             player.health = 0;
-            Debug.Log("Player defeated!");
+            healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
+            //Debug.Log("Player defeated!");
             resultBattle = result.lose;
             EndBattle();
+            return;
         }
     }
 
     private IEnumerator attackMiss()
     {
-        yield return new WaitUntil(() => skillCoroutine == null);
-        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Attack missed!";
+        yield return new WaitUntil(() => skillCoroutine == null && deadCoroutine == null);
+        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        string text = "Attack missed!";
+        foreach (char c in text)
+        {
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 
     private void showTarget()
     {
         //Debug.Log("Choose a target!");
+        foreach (var target in highlightTarget)
+        {
+            target.SetActive(false);
+        }
+        selectedTargetIndex = 0;
         chooseTarget = true;
         canClickSkill = false;
-        highlightTarget[selectedTargetIndex].SetActive(true);
+        enemyPosition[selectedTargetIndex].GetComponent<Animator>().SetBool("getSelect", true);
     }
 
 
     private IEnumerator changeSelect(int index)
     {
-        highlightTarget[selectedTargetIndex].SetActive(false);
-        if (index + selectedTargetIndex >= 0 && index + selectedTargetIndex < enemies.Count)
+        enemyPosition[selectedTargetIndex].GetComponent<Animator>().SetBool("getSelect", false);
+        if(index + selectedTargetIndex < 0)
+        {
+            selectedTargetIndex = enemies.Count - 1;
+        }
+        else if (index + selectedTargetIndex >= enemies.Count)
+        {
+            selectedTargetIndex = 0;
+        }
+        else
         {
             selectedTargetIndex += index;
         }
-        highlightTarget[selectedTargetIndex].SetActive(true);
+        enemyPosition[selectedTargetIndex].GetComponent<Animator>().SetBool("getSelect", true);
         yield return new WaitForSeconds(0.2f);
         changeCheck = false;
     }

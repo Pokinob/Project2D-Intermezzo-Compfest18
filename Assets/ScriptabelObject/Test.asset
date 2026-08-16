@@ -21,17 +21,17 @@ MonoBehaviour:
   Skills:
   - type: 0
     name: Punch
-    damage: 1
+    damage: 10
     heal: 0
     accuracy: 100
     priority: 1
     cooldown: 1
     cooldownRemaining: 0
   - type: 0
-    name: Punch
+    name: SalutKW
     damage: 1
     heal: 0
     accuracy: 100
-    priority: 1
-    cooldown: 1
+    priority: 10
+    cooldown: 3
     cooldownRemaining: 0
