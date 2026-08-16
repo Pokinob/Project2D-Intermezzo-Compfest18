@@ -703,6 +703,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: character_shadowguardian_22
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 250e72be5846e2dbf96c843ecdc54f5b
+      internalID: -1493503472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -734,6 +756,7 @@ TextureImporter:
       character_shadowguardian_2: -930859983647807093
       character_shadowguardian_20: -8901398189151537372
       character_shadowguardian_21: 1467447876
+      character_shadowguardian_22: -1493503472
       character_shadowguardian_3: 5928143706956178018
       character_shadowguardian_4: -5003432658049484978
       character_shadowguardian_5: -8771452242417593701

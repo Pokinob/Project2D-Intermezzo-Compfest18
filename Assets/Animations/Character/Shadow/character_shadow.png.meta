@@ -687,7 +687,7 @@ TextureImporter:
         width: 32
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -696,6 +696,28 @@ TextureImporter:
       bones: []
       spriteID: 51b5d417260dd049ea69060880b30896
       internalID: -544055379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: character_shadow_22
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53405d694690923949c6af95d869b6ff
+      internalID: -947119220
       vertices: []
       indices: 
       edges: []
@@ -731,6 +753,7 @@ TextureImporter:
       character_shadow_2: -3845249268332304782
       character_shadow_20: -4878207525093573319
       character_shadow_21: -544055379
+      character_shadow_22: -947119220
       character_shadow_3: -8561378854730236899
       character_shadow_4: -2012859970824530107
       character_shadow_5: 3856109648291866149
