@@ -900,6 +900,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_33
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 102
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede6cc6eea20bf9cf9337ed7f7f8bfa2
+      internalID: 575871380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: choverworld_mc_34
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 102
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06ea4cfa4472b3eb796820aff5e647c0
+      internalID: -683313864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -943,6 +987,8 @@ TextureImporter:
       choverworld_mc_30: 937928226
       choverworld_mc_31: -516136824
       choverworld_mc_32: -758075520
+      choverworld_mc_33: 575871380
+      choverworld_mc_34: -683313864
       choverworld_mc_4: -2461441414090057430
       choverworld_mc_5: -4553275494772730731
       choverworld_mc_6: 1779137899
