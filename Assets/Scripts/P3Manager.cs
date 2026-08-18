@@ -22,7 +22,7 @@ public class P3Manager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.LogWarning("Multiple instances of P3Manager found!");
+            Destroy(gameObject);
             return;
         }
         instance = this;

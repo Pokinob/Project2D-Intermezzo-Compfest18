@@ -17,9 +17,11 @@ public class PanelManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.LogError("Found more than one Panel Manager in the scene.");
+            Destroy(gameObject);
+            return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void OpenLoadPanel()

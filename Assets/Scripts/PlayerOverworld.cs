@@ -42,11 +42,12 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
     {
         if(instance != null)
         {
-            Debug.LogWarning("Multiple instances of PlayerOverworld found!");
+            Destroy(gameObject);
             return;
         }
         instance = this;
         moveDirection = Vector2.zero;
+        DontDestroyOnLoad(gameObject);
     }
 
     public static PlayerOverworld GetInstance()

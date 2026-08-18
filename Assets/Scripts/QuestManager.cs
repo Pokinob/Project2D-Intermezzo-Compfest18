@@ -15,10 +15,11 @@ public class QuestManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.LogWarning("Multiple instances of QuestManager found!");
+            Destroy(gameObject);
             return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public static QuestManager GetInstance()

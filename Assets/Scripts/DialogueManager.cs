@@ -51,9 +51,11 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         if(instance != null)
         {
-            Debug.LogWarning("Multiple instances of DialogueManager found!");
+            Destroy(gameObject);
+            return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void startGame()

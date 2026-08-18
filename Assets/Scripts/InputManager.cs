@@ -18,9 +18,11 @@ public class InputManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("Found more than one Input Manager in the scene.");
+            Destroy(gameObject);
+            return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public static InputManager GetInstance()
