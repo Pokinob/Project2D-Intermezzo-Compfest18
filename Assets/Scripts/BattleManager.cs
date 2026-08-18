@@ -102,14 +102,14 @@ public class BattleManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Destroy(gameObject);
+            Debug.LogWarning("Multiple instances of BattleManager found! Destroying duplicate.");
+
             return;
         }
         instance = this;
         textBattle = BattleUI.transform.Find("BottomPanel(Text)").gameObject;
         buttonBattle = BattleUI.transform.Find("BottomPanel(PlayerButton)").gameObject;
         skillCoroutine = null;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

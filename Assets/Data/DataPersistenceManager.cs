@@ -18,11 +18,10 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if(Instance != null)
         {
-            Destroy(gameObject);
+            Debug.LogWarning("Multiple instances of DataPersistenceManager found! Destroying duplicate.");
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); 
     }
 
     private void Start()

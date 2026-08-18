@@ -18,11 +18,10 @@ public class InputManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(gameObject);
+            Debug.LogWarning("Multiple instances of InputManager found! Destroying duplicate.");
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public static InputManager GetInstance()

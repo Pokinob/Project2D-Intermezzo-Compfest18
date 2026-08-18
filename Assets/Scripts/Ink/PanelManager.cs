@@ -17,11 +17,10 @@ public class PanelManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Destroy(gameObject);
+            Debug.LogWarning("Multiple instances of PanelManager found! Destroying duplicate.");
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void OpenLoadPanel()
