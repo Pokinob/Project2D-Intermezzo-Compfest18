@@ -3,33 +3,18 @@ using UnityEngine.Playables;
 
 public class ActiveCutscene : MonoBehaviour
 {
-    [SerializeField] private PlayableDirector playableDirector;
+    public PlayableDirector playableDirector;
 
-    private static ActiveCutscene instance;
+    private bool triggered = false;
 
-    public static ActiveCutscene GetInstance()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        return instance;
+        if (collision.CompareTag("Player") && !triggered)
+        {
+            timelineManager.GetInstance().currentTimeline = playableDirector;
+            timelineManager.GetInstance().playTimeline();
+            triggered = true;
+        }
     }
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    //private bool triggered = false;
-    //
-    //private void OnTriggerEnter2D(Collider2D collision)  if using trigger
-    //{
-    //    if (collision.CompareTag("Player") && !triggered)
-    //    {
-    //        playableDirector.Play();
-    //        triggered = true;
-    //    }
-    //}
-
-    public void startCutscene()
-    {
-        playableDirector.Play();
-    }
 }

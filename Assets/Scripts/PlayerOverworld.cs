@@ -15,6 +15,7 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
     private Collider2D playerCollider;
 
     public bool isFreeze=false;
+    public bool isSprint = false;
 
     public Animator animator;
 
@@ -152,10 +153,12 @@ public class PlayerOverworld : MonoBehaviour, IDataPersistence
         if (context.performed)
         {
             moveSpeed += 2f;
+            isSprint = true;
         }
         else if (context.canceled)
         {
             moveSpeed -= 2f;
+            isSprint = false;
         }
     }
 

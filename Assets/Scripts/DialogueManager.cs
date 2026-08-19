@@ -1,6 +1,7 @@
 using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     private const string LAYOUT_TAG = "layout";
     public DialogueVariable dialogueVariables { get; private set; }
     [SerializeField] private TextAsset loadglobalsInkFile;
-
+    [SerializeField] private PlayableDirector introScene;
 
 
     [Header("Other")]
@@ -60,7 +61,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public void startGame()
     {
         dialogueVariables = new DialogueVariable(loadglobalsInkFile);
-        //ActiveCutscene.GetInstance().startCutscene();
+        //introScene.Play();
     }
 
     public static DialogueManager GetInstance()
@@ -134,6 +135,11 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         {
             currentText = currentStory.Continue();
 
+            if (currentText.Equals("") && !currentStory.canContinue)
+            {
+                StartCoroutine(ExitDialogueMode());
+            }
+
             if (currentStory.currentTags.Count > 0)
                 HandleTags(currentStory.currentTags);
 
@@ -189,6 +195,19 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             PlayerOverworld.GetInstance().isFreeze = true;
             canContinue = false;
         });
+        currentStory.BindExternalFunction("startTutorial", () =>
+        {
+            introManager.GetInstance().onWASDPressed();
+        });
+        currentStory.BindExternalFunction("continueTimeline", () =>
+        {
+            if (timelineManager.GetInstance().currentTimeline != null)
+            {
+                dialoguePanel.SetActive(false);
+                //timelineManager.GetInstance().currentTimeline.Resume();
+                timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(1);
+            }
+        });
     }
 
     private void UnBindInkExternalFunction()
@@ -196,6 +215,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         currentStory.UnbindExternalFunction("claim");
         currentStory.UnbindExternalFunction("playQuest");
         currentStory.UnbindExternalFunction("inputName");
+        currentStory.UnbindExternalFunction("startTutorial");
+        currentStory.UnbindExternalFunction("continueTimeline");
     }
 
     IEnumerator DisplayText(string currentText)
@@ -314,7 +335,21 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         inputPanel.SetActive(false);
         ContinueStory();
     }
+    public void showDialogue()
+    {
+        if (currentStory!=null)
+        {
+            timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+            dialoguePanel.SetActive(true);
+            ContinueStory();
+        }
+    }
 
+    public void startDialogueTimeline(TextAsset ink)
+    {
+        timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+        EnterDialogueMode(ink);
+    }
     public void LoadData(GameData data)
     {
         dialogueVariables = new DialogueVariable(loadglobalsInkFile, data.inkData);
