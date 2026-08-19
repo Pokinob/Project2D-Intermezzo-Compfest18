@@ -204,7 +204,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             if (timelineManager.GetInstance().currentTimeline != null)
             {
                 dialoguePanel.SetActive(false);
-                //timelineManager.GetInstance().currentTimeline.Resume();
+                //timelineManager.GetInstance().currentTimeline.Play();
                 timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(1);
             }
         });
@@ -340,6 +340,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         if (currentStory!=null)
         {
             timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+            //timelineManager.GetInstance().currentTimeline.Evaluate();
+            //timelineManager.GetInstance().currentTimeline.Pause();
             dialoguePanel.SetActive(true);
             ContinueStory();
         }
@@ -348,6 +350,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public void startDialogueTimeline(TextAsset ink)
     {
         timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+        //timelineManager.GetInstance().currentTimeline.Evaluate();
+        //timelineManager.GetInstance().currentTimeline.Pause();
         EnterDialogueMode(ink);
     }
     public void LoadData(GameData data)
