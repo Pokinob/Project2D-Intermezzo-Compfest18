@@ -1,12 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!28 &-3481456113072094697
+--- !u!28 &-8104333249066050378
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TerminusTTF-4.49.3 Atlas
+  m_Name: TerminusTTF-Italic-4.49.3 Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -33,28 +33,28 @@ Texture2D:
     m_FilterMode: 0
     m_Aniso: 1
     m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
   m_LightmapFormat: 0
   m_ColorSpace: 1
   m_PlatformBlob: 
   image data: 1
-  _typelessdata: 00
+  _typelessdata: cd
   m_StreamData:
     serializedVersion: 2
     offset: 0
     size: 0
     path: 
---- !u!21 &-641281822081625114
+--- !u!21 &-1649050762401506714
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TerminusTTF-4.49.3 Atlas Material
-  m_Shader: {fileID: 4800000, guid: 128e987d567d4e2c824d754223b3f3b0, type: 3}
+  m_Name: TerminusTTF-Italic-4.49.3 Atlas Material
+  m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: -3481456113072094697}
+        m_Texture: {fileID: -8104333249066050378}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -109,7 +109,7 @@ Material:
     - _GlowOffset: 0
     - _GlowOuter: 0.05
     - _GlowPower: 0.75
-    - _GradientScale: 5
+    - _GradientScale: 10
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
@@ -119,9 +119,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 0.8
-    - _ScaleRatioB: 0.65
-    - _ScaleRatioC: 0.65
+    - _ScaleRatioA: 1
+    - _ScaleRatioB: 1
+    - _ScaleRatioC: 1
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -165,40 +165,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: TerminusTTF-4.49.3 SDF
+  m_Name: TerminusTTF-Italic-4.49.3 SDF
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_FontAsset
   m_Version: 1.1.0
   m_FaceInfo:
     m_FaceIndex: 0
     m_FamilyName: Terminus (TTF)
-    m_StyleName: Medium
-    m_PointSize: 16
+    m_StyleName: Italic
+    m_PointSize: 90
     m_Scale: 1
     m_UnitsPerEM: 1000
-    m_LineHeight: 17.44
-    m_AscentLine: 13.328
-    m_CapLine: 12
-    m_MeanLine: 12
+    m_LineHeight: 98.100006
+    m_AscentLine: 74.97
+    m_CapLine: 59
+    m_MeanLine: 42
     m_Baseline: 0
-    m_DescentLine: -2.672
-    m_SuperscriptOffset: 13.328
+    m_DescentLine: -15.030001
+    m_SuperscriptOffset: 74.97
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -2.672
+    m_SubscriptOffset: -15.030001
     m_SubscriptSize: 0.5
-    m_UnderlineOffset: -1.6
-    m_UnderlineThickness: 0.8
-    m_StrikethroughOffset: 4.8
-    m_StrikethroughThickness: 0.8
-    m_TabWidth: 8
-  m_Material: {fileID: -641281822081625114}
-  m_SourceFontFileGUID: 112525f27a538345a948b365bfe4d4c7
+    m_UnderlineOffset: -9
+    m_UnderlineThickness: 4.5
+    m_StrikethroughOffset: 16.8
+    m_StrikethroughThickness: 4.5
+    m_TabWidth: 45
+  m_Material: {fileID: -1649050762401506714}
+  m_SourceFontFileGUID: c61fbbaf42aefdc4993353ae5794bfc2
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: 112525f27a538345a948b365bfe4d4c7
+    sourceFontFileGUID: c61fbbaf42aefdc4993353ae5794bfc2
     faceIndex: 0
     pointSizeSamplingMode: 0
-    pointSize: 16
-    padding: 4
+    pointSize: 90
+    padding: 9
     paddingMode: 2
     packingMode: 0
     atlasWidth: 1024
@@ -209,30 +209,30 @@ MonoBehaviour:
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
-    renderMode: 4122
+    renderMode: 4165
     includeFontFeatures: 0
-  m_SourceFontFile: {fileID: 12800000, guid: 112525f27a538345a948b365bfe4d4c7, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: c61fbbaf42aefdc4993353ae5794bfc2, type: 3}
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
   m_GlyphTable: []
   m_CharacterTable: []
   m_AtlasTextures:
-  - {fileID: -3481456113072094697}
+  - {fileID: -8104333249066050378}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_GetFontFeatures: 1
   m_ClearDynamicDataOnBuild: 1
   m_AtlasWidth: 1024
   m_AtlasHeight: 1024
-  m_AtlasPadding: 4
-  m_AtlasRenderMode: 4122
+  m_AtlasPadding: 9
+  m_AtlasRenderMode: 4165
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 1024
-    m_Height: 1024
+    m_Width: 1023
+    m_Height: 1023
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []
@@ -251,13 +251,13 @@ MonoBehaviour:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
-    italicTypeface: {fileID: 11400000, guid: e1d04a2ea1f1fec46ad427b2b9287f77, type: 2}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: e8d444868a4bb4e4a99989ad9ef7261a, type: 2}
-    italicTypeface: {fileID: 11400000, guid: 9d6d945b3675db64b866c2f795dd0076, type: 2}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}

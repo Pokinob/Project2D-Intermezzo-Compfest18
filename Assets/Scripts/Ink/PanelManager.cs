@@ -8,6 +8,7 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private GameObject loadPanel;
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject savePanel;
+    [SerializeField] private GameObject settingsPanel;
     [SerializeField] private TextAsset loadglobalsInkFile;
 
     [SerializeField] private DialogueManager dialogueManager;
@@ -59,6 +60,27 @@ public class PanelManager : MonoBehaviour
         loadPanel.SetActive(false);
         savePanel.SetActive(false);
         dialogueManager.startGame();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void OpenSettingsPanel()
+    {
+        Debug.Log("Opening settings panel");
+        return;
+        mainPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+    public void CloseSettingsPanel()
+    {
+        Debug.Log("Closing settings panel");
+        return;
+        settingsPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 
 }

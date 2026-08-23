@@ -96,6 +96,7 @@ public class BattleManager : MonoBehaviour
     private bool canClickSkill = true;
     private bool chooseTarget = false;
     private bool enemyTurnInProgress = false;
+    private bool isBlock = false;
     public bool isBattleActive = false;
     private Coroutine skillCoroutine;
     private Coroutine deadCoroutine;
@@ -265,15 +266,15 @@ public class BattleManager : MonoBehaviour
             int rngGetItem = Random.Range(0, 100);
             if (rngGetItem >= 50)
             {
-                int rngCount = Random.Range(1, 3);
+                int rngCount = Random.Range(1, 2);
                 string getText;
                 if (rngCount == 1)
                 {
-                    getText = $"You found a Potion!";
+                    getText = $"You found a Potion from shadow";
                 }
                 else
                 {
-                    getText = $"You found {rngCount} Potions!";
+                    getText = $"You found {rngCount} Potions from shadow";
                 }
                 inventoryManager.GetInstance().AddItem("Potion", rngCount);
                 textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
@@ -336,7 +337,7 @@ public class BattleManager : MonoBehaviour
             if (enemy.speed <= 0)
             {
                 enemy.speed++;
-                string getStun = $"{enemy.nameChar} is stunned!";
+                string getStun = $"{enemy.nameChar} is stunned! Can't move!";
                 buttonBattle.SetActive(false);
                 sidePanel.SetActive(false);
                 textBattle.SetActive(true);
@@ -347,6 +348,10 @@ public class BattleManager : MonoBehaviour
                     yield return new WaitForSeconds(0.05f);
                 }
                 yield return new WaitForSeconds(0.5f);
+                if(enemy.speed == 1)
+                {
+                    enemyPosition[enemies.IndexOf(enemy)].GetComponent<infoEnemy>().isStun = false;
+                }
                 continue;
             }
             else
@@ -443,6 +448,7 @@ public class BattleManager : MonoBehaviour
             sidePanel.SetActive(false);
             skillPanel.SetActive(false);
             itemPanel.SetActive(false);
+            isBlock = false;
             battleState = BattleState.Player;
         }
     }
@@ -474,7 +480,6 @@ public class BattleManager : MonoBehaviour
         PlayerAttack(target, moveIndex, targetIndex);
     }
 
-    
     public void showSkill()
     {
         buttonBattle.SetActive(!buttonBattle.activeSelf);
@@ -617,8 +622,10 @@ public class BattleManager : MonoBehaviour
                 }
             case SkillType.stun:
                 {
+                    enemyPosition[targetIndex].GetComponent<Animator>().SetTrigger("GetHit");
                     enemies[targetIndex].speed -= player.skillset[moveIndex].stunSpeed;
-                    Debug.Log(enemies[targetIndex].nameChar + " get Stun");
+                    enemyPosition[targetIndex].GetComponent<infoEnemy>().isStun = true;
+                    //Debug.Log(enemies[targetIndex].nameChar + " get Stun");
                     break;
                 }
             case SkillType.Evade:
@@ -635,6 +642,14 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(changeState());
     }
 
+    public void blockSystem()
+    {
+        isBlock = true;
+        skillCoroutine = StartCoroutine(useSkillUI("Guard", ((Ink.Runtime.StringValue)DialogueManager.GetInstance().dialogueVariables.variableDictionary["MCName"]).value));
+        StartCoroutine(changeState());
+        return;
+    }
+
     private IEnumerator deadEnemy(int targetIndex)
     {
         yield return new WaitUntil(() => skillCoroutine == null);
@@ -646,8 +661,9 @@ public class BattleManager : MonoBehaviour
             textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => enemyPosition[targetIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Dead"));
         enemies.RemoveAt(targetIndex);
+        yield return new WaitForSeconds(0.2f);
         GameObject enemyRemove = enemyPosition[targetIndex];
         GameObject highlightRemove = highlightTarget[targetIndex];
         highlightTarget.RemoveAt(targetIndex);
@@ -669,6 +685,10 @@ public class BattleManager : MonoBehaviour
         }
         //Debug.Log("Attack hit!");
         PlayerOverworld.GetInstance().animator.SetTrigger("GetHit");
+        if(isBlock)
+        {
+            damage = Mathf.RoundToInt(damage * 0.7f);
+        }
         player.health -= damage;
         healthPlayerSlider.value = (float)player.health;
         healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
