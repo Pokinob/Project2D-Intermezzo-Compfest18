@@ -10,11 +10,9 @@ public class skills
     public int heal;
     public int accuracy;
     public int priority;
+    public int stunSpeed;
     public int cooldown;
     public int cooldownRemaining;
-    public skills(){
-        cooldownRemaining = 0;
-    }
 
     public skills(skills other)
     {
@@ -24,6 +22,7 @@ public class skills
         heal = other.heal;
         accuracy = other.accuracy;
         priority = other.priority;
+        stunSpeed = other.stunSpeed;
         cooldown = other.cooldown;
         cooldownRemaining = 0;
     }
@@ -34,15 +33,23 @@ public enum SkillType
 {
     Attack,
     Heal,
+    stun,
     Evade,
 }
 
+public enum entityType
+{
+    Player,
+    Enemy,
+    Boss,
+}
 
 
 [CreateAssetMenu(fileName = "BattleStats", menuName = "Scriptable Objects/BattleStats")]
 public class BattleStats : ScriptableObject
 {
     public GameObject prefab;
+    public entityType entityType;
     public string nameChar;
     public int maxHealth;
     public int defense;

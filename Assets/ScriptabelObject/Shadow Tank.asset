@@ -10,28 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3453be1c2d82e6ae9755ff8c3cb27a2, type: 3}
-  m_Name: Test
+  m_Name: Shadow Tank
   m_EditorClassIdentifier: Assembly-CSharp::BattleStats
-  prefab: {fileID: 952818323436361066, guid: 06884738f8111454bbccda166dd9451e, type: 3}
-  nameChar: Shadow KW
-  maxHealth: 10
-  defense: 1
-  evade: 50
-  speed: 1
+  prefab: {fileID: 0}
+  entityType: 0
+  nameChar: Sentinel
+  maxHealth: 150
+  defense: 0
+  evade: 0
+  speed: 0
   Skills:
   - type: 0
     name: Punch
-    damage: 10
+    damage: 5
     heal: 0
     accuracy: 100
     priority: 1
     cooldown: 1
     cooldownRemaining: 0
   - type: 0
-    name: SalutKW
-    damage: 1
+    name: Shield Attack
+    damage: 5
     heal: 0
-    accuracy: 100
-    priority: 10
-    cooldown: 3
+    accuracy: 70
+    priority: 5
+    cooldown: 1
     cooldownRemaining: 0

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
@@ -37,6 +39,7 @@ public class BattleManager : MonoBehaviour
         public string nameChar;
         public int health;
         public int maxHealth;
+        public entityType enemyType;
         public int mAttack;
         public int defense;
         public int evade;
@@ -47,6 +50,7 @@ public class BattleManager : MonoBehaviour
         {
             nameChar = data.nameChar;
             health = data.maxHealth;
+            enemyType = data.entityType;
             maxHealth = data.maxHealth;
             defense = data.defense;
             mAttack = 1;
@@ -67,7 +71,11 @@ public class BattleManager : MonoBehaviour
     BattleParticipant player;
     [SerializeField] private List<BattleParticipant> enemies;
     [SerializeField] private GameObject BattleUI;
+    [SerializeField] private GameObject sidePanel;
     [SerializeField] private GameObject skillPanel;
+    [SerializeField] private GameObject itemPanel;
+    [SerializeField] private GameObject itemBtnPrefab;
+    [SerializeField] private GameObject itemBtnLocation;
     [SerializeField] private List<GameObject> skillObj;
     [SerializeField] private List<GameObject> enemyPosition;
     [SerializeField] private List<GameObject> highlightTarget;
@@ -192,11 +200,13 @@ public class BattleManager : MonoBehaviour
     private IEnumerator transitionBeginBattle(GameObject playerPos, BattleStats[] enemyStats, List<GameObject> enemyPositions)
     {
         DialogueManager.GetInstance().fadeInScene.Play();
-        yield return new WaitForSeconds(0.2f);
+        DialogueManager.GetInstance().fadeInScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
+        yield return new WaitUntil(() => DialogueManager.GetInstance().fadeInScene.state != UnityEngine.Playables.PlayState.Playing);
         currentPlayerPosition = new Vector2(PlayerOverworld.GetInstance().transform.position.x, PlayerOverworld.GetInstance().transform.position.y);
         PlayerOverworld.GetInstance().transform.position = playerPos.transform.position;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
         DialogueManager.GetInstance().fadeOutScene.Play();
+        DialogueManager.GetInstance().fadeOutScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
         yield return new WaitUntil(() => DialogueManager.GetInstance().fadeOutScene.state != UnityEngine.Playables.PlayState.Playing);
         battleState = BattleState.Player;
         BattleUI.SetActive(true);
@@ -226,7 +236,7 @@ public class BattleManager : MonoBehaviour
             textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         textBattle.SetActive(false);
         buttonBattle.SetActive(true);
     }
@@ -251,7 +261,28 @@ public class BattleManager : MonoBehaviour
                 textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
                 yield return new WaitForSeconds(0.05f);
             }
-
+            yield return new WaitForSeconds(0.5f);
+            int rngGetItem = Random.Range(0, 100);
+            if (rngGetItem >= 50)
+            {
+                int rngCount = Random.Range(1, 3);
+                string getText;
+                if (rngCount == 1)
+                {
+                    getText = $"You found a Potion!";
+                }
+                else
+                {
+                    getText = $"You found {rngCount} Potions!";
+                }
+                inventoryManager.GetInstance().AddItem("Potion", rngCount);
+                textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+                foreach (char c in getText)
+                {
+                    textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
         }
         else if (resultBattle == result.lose)
         {
@@ -267,7 +298,9 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         BattleUI.SetActive(false);
         DialogueManager.GetInstance().fadeInScene.Play();
-        yield return new WaitForSeconds(0.3f);
+        DialogueManager.GetInstance().fadeInScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
+        yield return new WaitUntil(() => DialogueManager.GetInstance().fadeInScene.state != UnityEngine.Playables.PlayState.Playing);
+        yield return new WaitForSeconds(0.1f);
         foreach (GameObject enemyGO in enemyPosition)
         {
             Destroy(enemyGO);
@@ -275,6 +308,7 @@ public class BattleManager : MonoBehaviour
         PlayerOverworld.GetInstance().transform.position = currentPlayerPosition;
         yield return new WaitForSeconds(0.8f);
         DialogueManager.GetInstance().fadeOutScene.Play();
+        DialogueManager.GetInstance().fadeOutScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
         PlayerOverworld.GetInstance().isFreeze = false;
         currentPlayerPosition = Vector2.zero;
         PlayerOverworld.GetInstance().animator.Play("Idle");
@@ -299,12 +333,25 @@ public class BattleManager : MonoBehaviour
                 continue;
             }
             checkEnemyAlive = true;
-            if (enemy.speed == 0)
+            if (enemy.speed <= 0)
             {
-                enemy.speed = 1;
+                enemy.speed++;
+                string getStun = $"{enemy.nameChar} is stunned!";
+                buttonBattle.SetActive(false);
+                sidePanel.SetActive(false);
+                textBattle.SetActive(true);
+                textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+                foreach (char c in getStun)
+                {
+                    textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+                    yield return new WaitForSeconds(0.05f);
+                }
+                yield return new WaitForSeconds(0.5f);
+                continue;
             }
             else
             {
+                Debug.Log(enemy.speed);
                 bool useSkill = false;
                 foreach (skills skill in enemy.skillset)
                 {
@@ -328,11 +375,14 @@ public class BattleManager : MonoBehaviour
                                         {
                                             useSkill = true;
                                             skillCoroutine = StartCoroutine(useSkillUI(skill.name, enemy.nameChar));
+
                                             ally.health += skill.heal;
                                             if (ally.health > ally.maxHealth)
                                             {
                                                 ally.health = ally.maxHealth;
                                             }
+                                            enemyPosition[enemies.IndexOf(ally)].GetComponent<infoEnemy>().enemyHp.value = ally.health;
+                                            enemyPosition[enemies.IndexOf(ally)].GetComponent<infoEnemy>().enemyHPpoint.text = $"{ally.health}/{ally.maxHealth}";
                                             break;
                                         }
                                     }
@@ -351,7 +401,6 @@ public class BattleManager : MonoBehaviour
                     }
                     skill.cooldownRemaining -= 1;
                 }
-                enemy.speed += 1;
                 yield return new WaitUntil(() => skillCoroutine == null);
             }
         }
@@ -376,11 +425,13 @@ public class BattleManager : MonoBehaviour
     {
         yield return new WaitUntil(() => skillCoroutine == null && deadCoroutine == null && attackMissCoroutine == null);
         enemies = enemies.OrderByDescending(x => x.speed).ToList();
+        Debug.Log("Changing battle state...");
         yield return new WaitForSeconds(0.5f);
         if (battleState == BattleState.Player)
         {
             textBattle.SetActive(true);
             buttonBattle.SetActive(false);
+            sidePanel.SetActive(false);
             battleState = BattleState.Enemys;
             enemyTurnInProgress = false;
         }
@@ -389,12 +440,17 @@ public class BattleManager : MonoBehaviour
             //Debug.Log("test change");
             textBattle.SetActive(false);
             buttonBattle.SetActive(true);
+            sidePanel.SetActive(false);
+            skillPanel.SetActive(false);
+            itemPanel.SetActive(false);
             battleState = BattleState.Player;
         }
     }
     private IEnumerator useSkillUI(string skillName, string ownerName)
     {
+        yield return new WaitUntil(() => attackMissCoroutine == null);
         buttonBattle.SetActive(false);
+        sidePanel.SetActive(false);
         textBattle.SetActive(true);
         textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
         string text = $"{ownerName} used {skillName}!";
@@ -406,7 +462,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         skillCoroutine = null;
     }
-    
+
     public void PlayerTurn(int moveIndex, int targetIndex)
     {
         if (battleState != BattleState.Player || player.speed == -1)
@@ -418,36 +474,49 @@ public class BattleManager : MonoBehaviour
         PlayerAttack(target, moveIndex, targetIndex);
     }
 
+    
     public void showSkill()
     {
-        buttonBattle.SetActive(false);
-        textBattle.SetActive(true);
-        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Choose a skill!";
-        skillPanel.SetActive(true);
-        int index = 0;
-        foreach (var skill in player.skillset)
+        buttonBattle.SetActive(!buttonBattle.activeSelf);
+        textBattle.SetActive(!textBattle.activeSelf);
+        if (textBattle.activeSelf)
         {
-            skillObj[index].SetActive(true);
-            skillObj[index].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = skill.name;
-            GameObject coolDownPanel = skillObj[index].transform.Find("CooldownPanel").gameObject;
-            if (skill.cooldownRemaining <= 0)
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Choose a skill!";
+            sidePanel.SetActive(true);
+            skillPanel.SetActive(true);
+            int index = 0;
+            foreach (var skill in player.skillset)
             {
-                coolDownPanel.SetActive(false);
+                skillObj[index].SetActive(true);
+                skillObj[index].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = skill.name;
+                GameObject coolDownPanel = skillObj[index].transform.Find("CooldownPanel").gameObject;
+                if (skill.cooldownRemaining <= 0)
+                {
+                    coolDownPanel.SetActive(false);
+                }
+                else
+                {
+                    coolDownPanel.SetActive(true);
+                    coolDownPanel.transform.Find("CooldownCount").GetComponent<TextMeshProUGUI>().text = skill.cooldownRemaining.ToString();
+                }
+                index++;
             }
-            else
+            if (index < skillObj.Count)
             {
-                coolDownPanel.SetActive(true);
-                coolDownPanel.transform.Find("CooldownCount").GetComponent<TextMeshProUGUI>().text = skill.cooldownRemaining.ToString();
+                for (int i = index; i < skillObj.Count; i++)
+                {
+                    skillObj[i].SetActive(false);
+                }
             }
-            index++;
         }
-        if(index < skillObj.Count)
+        else
         {
-            for (int i = index; i < skillObj.Count; i++)
-            {
-                skillObj[i].SetActive(false);
-            }
+            sidePanel.SetActive(false);
+            textBattle.SetActive(false);
+            skillPanel.SetActive(false);
+            enemyPosition[selectedTargetIndex].GetComponent<Animator>().SetBool("getSelect", false);
         }
+        
     }
 
     public void afterSkill(int moveIndex)
@@ -459,8 +528,45 @@ public class BattleManager : MonoBehaviour
             return;
         }
         if (!canClickSkill) return;
+        if (player.skillset[moveIndex].type == SkillType.Heal)
+        {
+            PlayerAttack(enemies[0], moveIndex, 0);
+            return;
+        }
         canClickSkill = false;
         showTarget();
+    }
+
+    public void usingItem(string itemID)
+    {
+        itemDatas itemType = inventoryManager.GetInstance().inventory[itemID];
+        if(itemType.typeItem == typeItem.heal)
+        {
+            int healAmount = itemType.heal;
+            Debug.Log("Using item: " + itemType.itemName + ", Heal amount: " + healAmount);
+            skillCoroutine = StartCoroutine(useSkillUI(itemType.itemName, ((Ink.Runtime.StringValue)DialogueManager.GetInstance().dialogueVariables.variableDictionary["MCName"]).value));
+            player.health += healAmount;
+            if (player.health > player.maxHealth)
+            {
+                player.health = player.maxHealth;
+            }
+            healthPlayerSlider.value = (float)player.health;
+            healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
+        }
+        // Handle other item types here if needed
+        foreach (Transform child in itemBtnLocation.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (var skill in player.skillset)
+        {
+            if (skill.cooldownRemaining > 0)
+            {
+                skill.cooldownRemaining--;
+            }
+        }
+        inventoryManager.GetInstance().RemoveItem(itemID);
+        StartCoroutine(changeState());
     }
 
     void PlayerAttack(BattleParticipant target, int moveIndex, int targetIndex)
@@ -484,17 +590,40 @@ public class BattleManager : MonoBehaviour
             }
             return;
         }
-        enemyPosition[targetIndex].GetComponent<Animator>().SetTrigger("GetHit");
-        target.health -= player.skillset[moveIndex].damage;
-        enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
-        enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
-        //Debug.Log($"Target health after attack: {target.health}");
-        if (target.health <= 0)
+        switch (player.skillset[moveIndex].type)
         {
-            target.health = 0;
-            enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
-            enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
-            deadCoroutine = StartCoroutine(deadEnemy(targetIndex));
+            case SkillType.Attack:
+                {
+                    enemyPosition[targetIndex].GetComponent<Animator>().SetTrigger("GetHit");
+                    target.health -= player.skillset[moveIndex].damage;
+                    enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
+                    enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
+                    //Debug.Log($"Target health after attack: {target.health}");
+                    if (target.health <= 0)
+                    {
+                        target.health = 0;
+                        enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
+                        enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
+                        deadCoroutine = StartCoroutine(deadEnemy(targetIndex));
+                    }
+                    break;
+                }
+            case SkillType.Heal:
+                {
+                    player.health += player.skillset[moveIndex].heal;
+                    healthPlayerSlider.value = (float)player.health;
+                    healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
+                    break;
+                }
+            case SkillType.stun:
+                {
+                    enemies[targetIndex].speed -= player.skillset[moveIndex].stunSpeed;
+                    Debug.Log(enemies[targetIndex].nameChar + " get Stun");
+                    break;
+                }
+            case SkillType.Evade:
+                // Handle evade logic
+                break;
         }
         foreach (var skill in player.skillset)
         {
@@ -517,6 +646,7 @@ public class BattleManager : MonoBehaviour
             textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
             yield return new WaitForSeconds(0.05f);
         }
+        yield return new WaitForSeconds(0.5f);
         enemies.RemoveAt(targetIndex);
         GameObject enemyRemove = enemyPosition[targetIndex];
         GameObject highlightRemove = highlightTarget[targetIndex];
@@ -534,7 +664,7 @@ public class BattleManager : MonoBehaviour
         int enemyAcc = Random.Range(accuracy, 100);
         if (enemyAcc < checkAcc && enemyAcc != checkAcc)
         {
-            StartCoroutine(attackMiss());
+            attackMissCoroutine = StartCoroutine(attackMiss());
             return;
         }
         //Debug.Log("Attack hit!");
@@ -557,13 +687,15 @@ public class BattleManager : MonoBehaviour
     private IEnumerator attackMiss()
     {
         yield return new WaitUntil(() => skillCoroutine == null && deadCoroutine == null);
-        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        textBattle.GetComponentInChildren<TextMeshProUGUI>().text = "";
         string text = "Attack missed!";
         foreach (char c in text)
         {
             textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
             yield return new WaitForSeconds(0.05f);
         }
+        yield return new WaitForSeconds(0.5f);
+        attackMissCoroutine = null;
     }
 
     private void showTarget()
@@ -578,7 +710,6 @@ public class BattleManager : MonoBehaviour
         canClickSkill = false;
         enemyPosition[selectedTargetIndex].GetComponent<Animator>().SetBool("getSelect", true);
     }
-
 
     private IEnumerator changeSelect(int index)
     {
@@ -598,6 +729,104 @@ public class BattleManager : MonoBehaviour
         enemyPosition[selectedTargetIndex].GetComponent<Animator>().SetBool("getSelect", true);
         yield return new WaitForSeconds(0.2f);
         changeCheck = false;
+    }
+
+    public void toggleItemsUI()
+    {
+        textBattle.SetActive(!textBattle.activeSelf);
+        buttonBattle.SetActive(!buttonBattle.activeSelf);
+        if (textBattle.activeSelf)
+        {
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Choose an item!";
+            itemPanel.SetActive(true);
+            sidePanel.SetActive(true);
+            foreach (var item in inventoryManager.GetInstance().inventory)
+            {
+                Button itemBtn = Instantiate(itemBtnPrefab, itemBtnLocation.transform).GetComponent<Button>();
+                itemBtn.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = $"{item.Value.itemName} {item.Value.itemCount}x";
+                itemBtn.onClick.AddListener(() =>
+                {
+                    usingItem(item.Key);
+                });
+            }
+        }
+        else
+        {
+            itemPanel.SetActive(false);
+            sidePanel.SetActive(false);
+            foreach (Transform child in itemBtnLocation.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
+    public void tryEscape()
+    {
+        int escapeChance = Random.Range(0, 70);
+        foreach (var target in enemies)
+        {
+            if (target.enemyType == entityType.Boss)
+            {
+                StartCoroutine(escapeText(false));
+                return;
+            }
+        }
+        if (escapeChance < 50)
+        {
+            StartCoroutine(escapeText(false));
+            return;
+        }
+        else if (escapeChance >= 50)
+        {
+            StartCoroutine(escapeText(true));
+            return;
+        }
+    }
+
+    IEnumerator escapeText(bool success)
+    {
+        buttonBattle.SetActive(false);
+        textBattle.SetActive(true);
+        string text = success ? "You escaped!" : "You failed to escape!";
+        textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        foreach (char c in text)
+        {
+            textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitForSeconds(0.5f);
+        if(success)
+        {
+            int rngSteal = Random.Range(20, 100);
+            if (rngSteal >= 40)
+            {
+                int rngCount = Random.Range(1, 2);
+                string stealText;
+                if (rngCount == 1)
+                {
+                    stealText = "Oh no! You dropped a Potion while escaping!";
+                }
+                else
+                {
+                    stealText = $"Oh no! You dropped {rngCount} Potions while escaping!";
+                }
+                inventoryManager.GetInstance().RemoveItem("Potion");
+                textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+                foreach (char c in stealText)
+                {
+                    textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
+            yield return new WaitForSeconds(0.2f);
+            resultBattle = result.neutral;
+            EndBattle();
+        }
+        else
+        {
+            StartCoroutine(changeState());
+        }
     }
 
 }

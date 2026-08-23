@@ -10,45 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3453be1c2d82e6ae9755ff8c3cb27a2, type: 3}
-  m_Name: Shadow
+  m_Name: Shadow Seer
   m_EditorClassIdentifier: Assembly-CSharp::BattleStats
   prefab: {fileID: 952818323436361066, guid: 06884738f8111454bbccda166dd9451e, type: 3}
   entityType: 1
-  nameChar: Fighter
-  maxHealth: 80
+  nameChar: Seer
+  maxHealth: 50
   defense: 1
   evade: 50
   speed: 1
   Skills:
   - type: 0
     name: Punch
-    damage: 10
+    damage: 2
     heal: 0
     accuracy: 100
     priority: 1
     cooldown: 1
     cooldownRemaining: 0
-  - type: 0
-    name: Slash
-    damage: 20
-    heal: 0
+  - type: 1
+    name: Heal
+    damage: 1
+    heal: 5
     accuracy: 100
-    priority: 10
+    priority: 2
     cooldown: 2
     cooldownRemaining: 0
-  - type: 0
-    name: Double Slash
-    damage: 25
-    heal: 0
-    accuracy: 70
-    priority: 7
-    cooldown: 5
-    cooldownRemaining: 0
-  - type: 0
-    name: Power Slash
-    damage: 50
-    heal: 0
-    accuracy: 50
+  - type: 1
+    name: Big Heal
+    damage: 1
+    heal: 30
+    accuracy: 100
     priority: 3
     cooldown: 7
     cooldownRemaining: 0

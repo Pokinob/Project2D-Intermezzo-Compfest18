@@ -13,25 +13,46 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::BattleStats
   prefab: {fileID: 0}
+  entityType: 0
   nameChar: MC
-  maxHealth: 10
+  maxHealth: 100
   defense: 1
   evade: 50
   speed: 1
   Skills:
-  - type: 0
-    name: punch
-    damage: 1
+  - type: 2
+    name: lock
+    damage: 0
     heal: 0
-    accuracy: 100
+    accuracy: 90
     priority: 1
+    stunSpeed: 2
+    cooldown: 4
+    cooldownRemaining: 0
+  - type: 0
+    name: Slash
+    damage: 30
+    heal: 0
+    accuracy: 90
+    priority: 1
+    stunSpeed: 0
     cooldown: 1
     cooldownRemaining: 0
   - type: 0
-    name: ceramah
-    damage: 2
+    name: Super Slash
+    damage: 50
     heal: 0
+    accuracy: 50
+    priority: 1
+    stunSpeed: 0
+    cooldown: 5
+    cooldownRemaining: 0
+  - type: 1
+    name: Rest
+    damage: 0
+    heal: 20
     accuracy: 100
     priority: 1
+    stunSpeed: 0
     cooldown: 3
     cooldownRemaining: 0
