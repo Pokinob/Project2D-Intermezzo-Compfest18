@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1437116046394414051
 Transform:
   m_ObjectHideFlags: 0
@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 6102585120314217490}
   - component: {fileID: 7458781903070222769}
   - component: {fileID: 908478920278383622}
+  - component: {fileID: 6434241411494178023}
   m_Layer: 0
   m_Name: TriggerClaim
   m_TagString: Untagged
@@ -231,5 +232,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
   inkJSON: {fileID: 4900000, guid: b41418d10d2486e47b0b91323eb54136, type: 3}
-  claimObject: {fileID: 6073189432494497095}
-  isClaim: f10a4450-72c6-4296-8ced-734494b32eb0
+--- !u!114 &6434241411494178023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7584529963852637013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28df0a0a9d6089429a34c0f8ac6b63b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  itemObj: {fileID: 11400000, guid: 2e2144beeb8d0364daa835b756f6225b, type: 2}

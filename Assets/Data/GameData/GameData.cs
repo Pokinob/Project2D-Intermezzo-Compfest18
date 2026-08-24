@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-
 public enum typeItem
 {
     heal,
+    itemPuzzle,
     normal
 }
 
+[System.Serializable]
 public class itemDatas
 {
     public string itemName;
+    public string itemGuid;
     public int itemCount;
     public typeItem typeItem;
     public int heal;
@@ -23,6 +24,8 @@ public class itemDatas
         this.heal = heal;
     }
 }
+
+[System.Serializable]
 public class GameData
 {
     public Vector3 playerPosition;
@@ -30,7 +33,6 @@ public class GameData
     public SerializeDictionary<string, itemDatas> inventory;
     public SerializeDictionary<int, bool> puzzleData;
     public string inkData;
-
     public GameData()
     {
         this.playerPosition = Vector3.zero;

@@ -9,10 +9,15 @@ public class DataPersistenceManager : MonoBehaviour
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
 
-    private GameData gameData;
+    public GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private DataHandler handler;
     public static DataPersistenceManager Instance { get; private set; }
+
+    public static DataPersistenceManager GetInstance()
+    {
+        return Instance;
+    }
 
     private void Awake()
     {

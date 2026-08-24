@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour, IDataPersistence
@@ -17,6 +18,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private Animator portraitAnimator;
     [SerializeField] private Animator layoutAnimator;
+    public PlayableDirector beforeStartGame;
     public PlayableDirector fadeInScene;
     public PlayableDirector fadeOutScene;
 
@@ -39,12 +41,16 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public bool dialogueIsPlaying { get; private set; }
     public bool canContinue;
     public string namaMc = "???";
-    public bool isClaim { get; set; } = false;
     private bool isTyping;
     private string currentText;
+    public string isClaim;
+    public string ItemName;
+    public string ItemType;
     [SerializeField]private TextMeshProUGUI inputNama;
     [SerializeField] private GameObject inputPanel;
     private Coroutine typingCoroutine;
+    private Coroutine ExitDialogueCoroutine;
+    public Coroutine ClaimCoroutine;
     private static DialogueManager instance;
 
 
@@ -56,12 +62,32 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             return;
         }
         instance = this;
+        isClaim = "";
+        beforeStartGame.Play();
+        StartCoroutine(showMainPanel());
     }
+
+    
 
     public void startGame()
     {
         dialogueVariables = new DialogueVariable(loadglobalsInkFile);
-        //introScene.Play();
+        StartCoroutine(loadingGame());
+    }
+
+    IEnumerator showMainPanel()
+    {
+        yield return new WaitForSeconds(7f);
+        
+        PanelManager.GetInstance().mainPanel.SetActive(true);
+    }
+    IEnumerator loadingGame()
+    {
+        fadeInScene.Play();
+        yield return new WaitUntil(() => fadeInScene.state != PlayState.Playing);
+        beforeStartGame.Stop();
+        yield return new WaitForSeconds(0.2f);
+        introScene.Play();
     }
 
     public static DialogueManager GetInstance()
@@ -100,21 +126,15 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         ContinueStory();
     }
 
-
-    private IEnumerator delayClaim()
-    {
-        yield return new WaitForSeconds(0.5f);
-        isClaim = false;   
-    }
-
     private IEnumerator ExitDialogueMode()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitUntil(() => isClaim == "");
         dialogueVariables.StopListening(currentStory);
         UnBindInkExternalFunction();
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        ExitDialogueCoroutine = null;
     }
 
 
@@ -133,15 +153,23 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
         if (currentStory.canContinue)
         {
-            currentText = currentStory.Continue();
-
-            if (currentText.Equals("") && !currentStory.canContinue)
+            currentText = "";
+            while (currentStory.canContinue && string.IsNullOrEmpty(currentText))
             {
-                StartCoroutine(ExitDialogueMode());
+                currentText = currentStory.Continue();
+                if (currentStory.currentTags.Count > 0)
+                {
+                    HandleTags(currentStory.currentTags);
+                    Debug.Log("This is Tag");
+                }
             }
 
-            if (currentStory.currentTags.Count > 0)
-                HandleTags(currentStory.currentTags);
+            if (string.IsNullOrEmpty(currentText) && !currentStory.canContinue)
+            {
+                Debug.Log("Finish");
+                ExitDialogueCoroutine = StartCoroutine(ExitDialogueMode());
+                return;
+            }
 
             //Debug.Log("Continue Story");
             typingCoroutine = StartCoroutine(DisplayText(currentText));
@@ -149,28 +177,20 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
         else
         {
-            StartCoroutine(ExitDialogueMode());
+            Debug.Log("Finish");
+            ExitDialogueCoroutine = StartCoroutine(ExitDialogueMode());
         }
     }
 
     private void BindInkExternalFunction()
     {
-        currentStory.BindExternalFunction("claim", (string itemId) =>
+        currentStory.BindExternalFunction("GetItem", () =>
         {
-            if (isClaim) return;
-            Debug.Log(itemId);
-            isClaim = true;
-            switch (itemId)
-            {
-                case "ItemPuzzle":
-                    break;
+            return ItemName;
+        });
 
-                default:
-                    Debug.Log("Inventory Item");
-                    break;
-            }
-            StartCoroutine(ExitDialogueMode());
-            StartCoroutine(delayClaim());
+        currentStory.BindExternalFunction("DelayClaim", () =>{
+            ClaimCoroutine = StartCoroutine(DelayClaim());
         });
 
         currentStory.BindExternalFunction("playQuest", (string Quest) =>
@@ -212,11 +232,19 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     private void UnBindInkExternalFunction()
     {
-        currentStory.UnbindExternalFunction("claim");
+        currentStory.UnbindExternalFunction("GetItem");
+        currentStory.UnbindExternalFunction("DelayClaim");
         currentStory.UnbindExternalFunction("playQuest");
         currentStory.UnbindExternalFunction("inputName");
         currentStory.UnbindExternalFunction("startTutorial");
         currentStory.UnbindExternalFunction("continueTimeline");
+    }
+    IEnumerator DelayClaim()
+    {
+        yield return new WaitUntil(() => ExitDialogueCoroutine !=null);
+        isClaim = "";
+        ItemName = "";
+        ClaimCoroutine = null;
     }
 
     IEnumerator DisplayText(string currentText)

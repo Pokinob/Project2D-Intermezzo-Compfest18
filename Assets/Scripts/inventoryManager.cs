@@ -39,8 +39,10 @@ public class inventoryManager : MonoBehaviour, IDataPersistence
         else
         {
             if (itemDictionary.ContainsKey(itemName))
+            inventory.Add(itemName, new itemDatas(itemName, itemDictionary[itemName].typeItem, itemDictionary[itemName].heal));
+            else
             {
-                inventory.Add(itemName, new itemDatas(itemName, itemDictionary[itemName].typeItem, itemDictionary[itemName].heal));
+                inventory.Add(itemName, new itemDatas(itemName, typeItem.normal, 0));
             }
         }
     }
@@ -70,6 +72,7 @@ public class inventoryManager : MonoBehaviour, IDataPersistence
         data.inventory.Clear();
         foreach (var item in inventory)
         {
+            Debug.Log(item.Key);
             data.inventory.Add(item.Key, item.Value);
         }
     }

@@ -10,16 +10,6 @@ public class DialogueTrigger : MonoBehaviour, IDataPersistence
     [Header("Ink Asset")]
     [SerializeField] private TextAsset inkJSON;
 
-    [Header("Claim Settings")]
-    [SerializeField] private GameObject claimObject;
-    [SerializeField] private string isClaim;
-
-    [ContextMenu("Generate Unique IDitem")]
-    private void GenerateUniqueID()
-    {
-        isClaim = System.Guid.NewGuid().ToString();
-    }
-
     private void Awake()
     {
         playerInRange = false;
@@ -27,10 +17,6 @@ public class DialogueTrigger : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        if (playerInRange && DialogueManager.GetInstance().isClaim && claimObject != null)
-        {
-            claimObject.SetActive(false);
-        }
         if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
             if(InputManager.GetInstance().GetInteractPressed())
@@ -59,28 +45,10 @@ public class DialogueTrigger : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if(data != null)
-        {
-            if(data.itemData.ContainsKey(isClaim))
-            {
-                 if(data.itemData[isClaim] == false)
-                 {
-                      claimObject.SetActive(false);
-                 }
-            }
-        }
-        
+
     }
 
     public void SaveData(ref GameData data)
     {
-        if(claimObject != null)
-        {
-            if (data.itemData.ContainsKey(isClaim))
-            {
-                data.itemData.Remove(isClaim);
-            }
-            data.itemData.Add(isClaim, claimObject.activeSelf);
-        }       
     }
 }

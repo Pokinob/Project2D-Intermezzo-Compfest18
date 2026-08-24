@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PanelManager : MonoBehaviour
 {
     [SerializeField] private GameObject loadPanel;
-    [SerializeField] private GameObject mainPanel;
+    public GameObject mainPanel;
     [SerializeField] private GameObject savePanel;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private TextAsset loadglobalsInkFile;
@@ -22,6 +22,11 @@ public class PanelManager : MonoBehaviour
             return;
         }
         instance = this;
+    }
+
+    public static PanelManager GetInstance()
+    {
+        return instance;
     }
 
     public void OpenLoadPanel()

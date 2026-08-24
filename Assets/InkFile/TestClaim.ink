@@ -1,10 +1,14 @@
 INCLUDE globals.ink
-EXTERNAL claim(itemId)
+EXTERNAL GetItem()
+EXTERNAL DelayClaim()
 -> main
 
+VAR ItemName = ""
+VAR ItemType = ""
+VAR ItemLevel = ""
+
 ===main===
-~ ItemP1 = ItemP1 + 1
-#layout:hide
-You Obtained Item
-~ claim("ItemPuzzle")
+~ItemName = GetItem()
+~DelayClaim()
+You Obtained {ItemName} #layout:hide
 ->END
