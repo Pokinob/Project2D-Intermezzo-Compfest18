@@ -12,7 +12,6 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour, IDataPersistence
 {
     [Header("Dialogue UI")]
-
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI speakerNameText;
@@ -67,23 +66,25 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         StartCoroutine(showMainPanel());
     }
 
-    
-
+    public void ResetTimeline(PlayableDirector timeline)
+    {
+        timeline.gameObject.SetActive(true);
+        timeline.Play();
+    }
     public void startGame()
     {
-        dialogueVariables = new DialogueVariable(loadglobalsInkFile);
+        ResetTimeline(fadeInScene);
         StartCoroutine(loadingGame());
+        dialogueVariables = new DialogueVariable(loadglobalsInkFile);
     }
 
     IEnumerator showMainPanel()
     {
         yield return new WaitForSeconds(7f);
-        
         PanelManager.GetInstance().mainPanel.SetActive(true);
     }
     IEnumerator loadingGame()
     {
-        fadeInScene.Play();
         yield return new WaitUntil(() => fadeInScene.state != PlayState.Playing);
         beforeStartGame.Stop();
         yield return new WaitForSeconds(0.2f);
