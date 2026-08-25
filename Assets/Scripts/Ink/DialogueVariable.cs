@@ -23,7 +23,7 @@ public class DialogueVariable : IDataPersistence
         {
             Ink.Runtime.Object value = globalVariable.variablesState.GetVariableWithName(name);
             variableDictionary.Add(name, value);
-            Debug.Log($"Variable '{name}' initialized with value: {value}");
+            //Debug.Log($"Variable '{name}' initialized with value: {value}");
         }
     }
 
@@ -42,7 +42,7 @@ public class DialogueVariable : IDataPersistence
     private void variableChange(string variableName, Ink.Runtime.Object value)
     {
         // Handle the variable change here
-        Debug.Log($"Variable '{variableName}' changed to: {value}");
+        //Debug.Log($"Variable '{variableName}' changed to: {value}");
         if (variableDictionary.ContainsKey(variableName))
         {
             Debug.Log(variableDictionary[variableName]);

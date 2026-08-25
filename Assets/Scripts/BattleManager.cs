@@ -83,6 +83,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject healthPlayerUI;
     [SerializeField] private TextMeshProUGUI healthTextPlayer;
     [SerializeField] private Slider healthPlayerSlider;
+    public bool tutorialBattle = false;
 
     [SerializeField] private facing face;
     private result resultBattle;
@@ -101,6 +102,7 @@ public class BattleManager : MonoBehaviour
     private Coroutine skillCoroutine;
     private Coroutine deadCoroutine;
     private Coroutine attackMissCoroutine;
+    public Coroutine beginBattle;
     private static BattleManager instance;
 
     public static BattleManager GetInstance()
@@ -123,6 +125,14 @@ public class BattleManager : MonoBehaviour
 
     void Update()
     {
+        if (DialogueManager.GetInstance().canBattle)
+        {
+            BattleUI.SetActive(true);
+        }else if (!DialogueManager.GetInstance().canBattle)
+        {
+            BattleUI.SetActive(false);
+            return;
+        }
         if (chooseTarget)
         {
             if (InputManager.GetInstance().GetMoveDirection() != Vector2.zero && !changeCheck)
@@ -195,14 +205,20 @@ public class BattleManager : MonoBehaviour
         healthPlayerSlider.maxValue = player.maxHealth;
         healthPlayerSlider.value = player.health;
         healthTextPlayer.text = $"{player.health}/{player.maxHealth}";
-        StartCoroutine(transitionBeginBattle(playerPos, enemyStats, enemyPositions));
+        beginBattle = StartCoroutine(transitionBeginBattle(playerPos, enemyStats, enemyPositions));
     }
 
     private IEnumerator transitionBeginBattle(GameObject playerPos, BattleStats[] enemyStats, List<GameObject> enemyPositions)
     {
+        DialogueManager.GetInstance().fadeInScene.gameObject.SetActive(true);
+        DialogueManager.GetInstance().fadeInScene.Stop();
         DialogueManager.GetInstance().fadeInScene.Play();
         DialogueManager.GetInstance().fadeInScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
         yield return new WaitUntil(() => DialogueManager.GetInstance().fadeInScene.state != UnityEngine.Playables.PlayState.Playing);
+        if (timelineManager.GetInstance().currentTimeline != null)
+        {
+            timelineManager.GetInstance().currentTimeline.Stop();
+        }
         currentPlayerPosition = new Vector2(PlayerOverworld.GetInstance().transform.position.x, PlayerOverworld.GetInstance().transform.position.y);
         PlayerOverworld.GetInstance().transform.position = playerPos.transform.position;
         yield return new WaitForSeconds(0.5f);
@@ -240,6 +256,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         textBattle.SetActive(false);
         buttonBattle.SetActive(true);
+        beginBattle = null;
     }
     public void EndBattle()
     {
@@ -270,11 +287,11 @@ public class BattleManager : MonoBehaviour
                 string getText;
                 if (rngCount == 1)
                 {
-                    getText = $"You found a Potion from shadow";
+                    getText = $"You found a Potion from enemy";
                 }
                 else
                 {
-                    getText = $"You found {rngCount} Potions from shadow";
+                    getText = $"You found {rngCount} Potions from enemy";
                 }
                 inventoryManager.GetInstance().AddItem("Potion", rngCount);
                 textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
@@ -308,6 +325,12 @@ public class BattleManager : MonoBehaviour
         }
         PlayerOverworld.GetInstance().transform.position = currentPlayerPosition;
         yield return new WaitForSeconds(0.8f);
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            DialogueManager.GetInstance().dialoguePanel.SetActive(true);
+            DialogueManager.GetInstance().canBattle = false;
+            DialogueManager.GetInstance().canContinue = true;
+        }
         DialogueManager.GetInstance().fadeOutScene.Play();
         DialogueManager.GetInstance().fadeOutScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
         PlayerOverworld.GetInstance().isFreeze = false;
@@ -600,6 +623,7 @@ public class BattleManager : MonoBehaviour
             case SkillType.Attack:
                 {
                     enemyPosition[targetIndex].GetComponent<Animator>().SetTrigger("GetHit");
+                    
                     target.health -= player.skillset[moveIndex].damage;
                     enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHp.value = target.health;
                     enemyPosition[targetIndex].GetComponent<infoEnemy>().enemyHPpoint.text = $"{target.health}/{target.maxHealth}";
@@ -645,7 +669,7 @@ public class BattleManager : MonoBehaviour
     public void blockSystem()
     {
         isBlock = true;
-        skillCoroutine = StartCoroutine(useSkillUI("Guard", ((Ink.Runtime.StringValue)DialogueManager.GetInstance().dialogueVariables.variableDictionary["MCName"]).value));
+        skillCoroutine = StartCoroutine(useSkillUI("Counter", ((Ink.Runtime.StringValue)DialogueManager.GetInstance().dialogueVariables.variableDictionary["MCName"]).value));
         StartCoroutine(changeState());
         return;
     }
@@ -655,7 +679,10 @@ public class BattleManager : MonoBehaviour
         yield return new WaitUntil(() => skillCoroutine == null);
         textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
         string text = $"{enemies[targetIndex].nameChar} defeated!";
+        if(enemyPosition[targetIndex].GetComponent<Animator>() != null)
+        {
         enemyPosition[targetIndex].GetComponent<Animator>().Play("Dead");
+        }
         foreach (char c in text)
         {
             textBattle.GetComponentInChildren<TMPro.TextMeshProUGUI>().text += c;

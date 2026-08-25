@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3453be1c2d82e6ae9755ff8c3cb27a2, type: 3}
-  m_Name: Enemy1
+  m_Name: Tutorial
   m_EditorClassIdentifier: Assembly-CSharp::BattleStats
-  maxHealth: 10
+  prefab: {fileID: 952818323436361066, guid: 58ed17df5c79e9247a65c086fa209e33, type: 3}
+  entityType: 1
+  nameChar: Scarecrow
+  maxHealth: 100
   defense: 0
   evade: 50
+  speed: 1
   Skills:
   - type: 0
-    damage: 1
+    name: Stab
+    damage: 20
     heal: 0
-    accuracy: 90
+    accuracy: 100
     priority: 0
+    stunSpeed: 0
     cooldown: 1
     cooldownRemaining: 0

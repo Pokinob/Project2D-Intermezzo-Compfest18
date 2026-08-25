@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour, IDataPersistence
 {
     [Header("Dialogue UI")]
-    [SerializeField] private GameObject dialoguePanel;
+    public GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private Animator portraitAnimator;
@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     [Header("Other")]
     public bool dialogueIsPlaying { get; private set; }
     public bool canContinue;
+    public bool canBattle=false;
     public string namaMc = "???";
     private bool isTyping;
     private string currentText;
@@ -47,6 +48,8 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     public string ItemType;
     [SerializeField]private TextMeshProUGUI inputNama;
     [SerializeField] private GameObject inputPanel;
+    [SerializeField] private GameObject playerPosTutorial;
+    [SerializeField] private List<GameObject> enemyPosTutorial;
     private Coroutine typingCoroutine;
     private Coroutine ExitDialogueCoroutine;
     public Coroutine ClaimCoroutine;
@@ -62,7 +65,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
         instance = this;
         isClaim = "";
-        beforeStartGame.Play();
+        //beforeStartGame.Play();
         StartCoroutine(showMainPanel());
     }
 
@@ -73,22 +76,23 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     }
     public void startGame()
     {
-        ResetTimeline(fadeInScene);
-        StartCoroutine(loadingGame());
+        //ResetTimeline(fadeInScene);
+        //StartCoroutine(loadingGame());
         dialogueVariables = new DialogueVariable(loadglobalsInkFile);
     }
 
     IEnumerator showMainPanel()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(1f);
         PanelManager.GetInstance().mainPanel.SetActive(true);
     }
     IEnumerator loadingGame()
     {
         yield return new WaitUntil(() => fadeInScene.state != PlayState.Playing);
         beforeStartGame.Stop();
+        fadeOutScene.Play();
         yield return new WaitForSeconds(0.2f);
-        introScene.Play();
+        //introScene.Play();
     }
 
     public static DialogueManager GetInstance()
@@ -116,13 +120,14 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
-    {
+    {   
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         dialogueVariables.StartListening(currentStory);
         // Cara manggil function dari ink ke unity, misal di ink ada {playDebug("test")} maka akan memanggil function playDebug di unity
         BindInkExternalFunction();
+        canContinue = true;
         dialogueText.text = "";
         ContinueStory();
     }
@@ -160,14 +165,14 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                 currentText = currentStory.Continue();
                 if (currentStory.currentTags.Count > 0)
                 {
-                    HandleTags(currentStory.currentTags);
-                    Debug.Log("This is Tag");
+                    StartCoroutine(HandleTags(currentStory.currentTags));
+                    //Debug.Log("This is Tag");
                 }
             }
 
             if (string.IsNullOrEmpty(currentText) && !currentStory.canContinue)
             {
-                Debug.Log("Finish");
+                //Debug.Log("Finish");
                 ExitDialogueCoroutine = StartCoroutine(ExitDialogueMode());
                 return;
             }
@@ -178,7 +183,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
         else
         {
-            Debug.Log("Finish");
+            //Debug.Log("Finish");
             ExitDialogueCoroutine = StartCoroutine(ExitDialogueMode());
         }
     }
@@ -192,6 +197,11 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
         currentStory.BindExternalFunction("DelayClaim", () =>{
             ClaimCoroutine = StartCoroutine(DelayClaim());
+        });
+
+        currentStory.BindExternalFunction("OpenGate", (int levelIndex) =>
+        {
+            GateManager.GetInstance().SetGateLevel(levelIndex);
         });
 
         currentStory.BindExternalFunction("playQuest", (string Quest) =>
@@ -220,26 +230,63 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         {
             introManager.GetInstance().onWASDPressed();
         });
-        currentStory.BindExternalFunction("continueTimeline", () =>
+        currentStory.BindExternalFunction("continueTimeline", () => 
         {
             if (timelineManager.GetInstance().currentTimeline != null)
             {
+                canContinue = false;
                 dialoguePanel.SetActive(false);
                 //timelineManager.GetInstance().currentTimeline.Play();
                 timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(1);
             }
+        });
+        currentStory.BindExternalFunction("StartBattle", (int enemyIndex) =>
+        {
+            BattleStats[] temp = new BattleStats[1];
+            temp[0] = EnemyDB.GetInstance().enemyDataArray[enemyIndex];
+            canContinue = false;
+            BattleManager.GetInstance().StartBattle(temp, enemyPosTutorial, playerPosTutorial);
+        });
+        currentStory.BindExternalFunction("ContinueBattle", (bool value) =>
+        {
+            showDialogueBattle(value);
+        });
+        currentStory.BindExternalFunction("AddItem", (string itemID, int itemCnt) =>
+        {
+            //Debug.Log("Add Item: " + itemID + " Count: " + itemCnt);
+            inventoryManager.GetInstance().AddItem(itemID, itemCnt);
         });
     }
 
     private void UnBindInkExternalFunction()
     {
         currentStory.UnbindExternalFunction("GetItem");
+        currentStory.UnbindExternalFunction("OpenGate");
         currentStory.UnbindExternalFunction("DelayClaim");
         currentStory.UnbindExternalFunction("playQuest");
         currentStory.UnbindExternalFunction("inputName");
         currentStory.UnbindExternalFunction("startTutorial");
         currentStory.UnbindExternalFunction("continueTimeline");
+        currentStory.UnbindExternalFunction("StartBattle");
+        currentStory.UnbindExternalFunction("AddItem");
     }
+
+    private void showDialogueBattle(bool value)
+    {
+        if (value)
+        {
+            canBattle = true;
+            dialoguePanel.SetActive(false);
+            canContinue = false;
+        }
+        else
+        {
+            canBattle = false;
+            dialoguePanel.SetActive(true);
+            canContinue = true;
+        }
+    }
+
     IEnumerator DelayClaim()
     {
         yield return new WaitUntil(() => ExitDialogueCoroutine !=null);
@@ -250,6 +297,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     IEnumerator DisplayText(string currentText)
     {
+        yield return new WaitUntil(() => canContinue);
         dialogueText.text = "";
         isTyping = true;
         foreach (char letter in currentText)
@@ -262,18 +310,19 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     }
 
     // Handle tags from Ink story
-    private void HandleTags(List<string> tags)
+    private IEnumerator HandleTags(List<string> tags)
     {
+        yield return new WaitUntil(() => canContinue);
         foreach (string tag in tags)
         {
             string[] splitTag = tag.Split(':');
             if (splitTag.Length != 2)
             {
-                Debug.LogWarning("Tag could not be parsed: " + tag);
+                //Debug.LogWarning("Tag could not be parsed: " + tag);
             }
             string tagKey = splitTag[0].Trim();
             string tagValue = splitTag[1].Trim();
-            Debug.Log("Tag Key: " + tagKey + ", Tag Value: " + tagValue);
+            //Debug.Log("Tag Key: " + tagKey + ", Tag Value: " + tagValue);
             switch (tagKey)
             {
                 case SPEAKER_TAG:
@@ -290,7 +339,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                             }
                             else
                             {
-                                Debug.Log("Blm ada nama");
+                                //Debug.Log("Blm ada nama");
                                 speakerNameText.text = "???";
                             }
                         }
@@ -301,13 +350,13 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                         break;
                     }
                 case PORTRAIT_TAG:
-                    // Handle portrait change (soon)
+                    portraitAnimator.Play(tagValue);
                     break;
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);
                     break;
                 default:
-                    Debug.LogWarning("Tag is not recognized: " + tag);
+                    //Debug.LogWarning("Tag is not recognized: " + tag);
                     break;
             }
         }
@@ -362,7 +411,6 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         canContinue = true;
         PlayerOverworld.GetInstance().isFreeze = false;
         inputPanel.SetActive(false);
-        ContinueStory();
     }
     public void showDialogue()
     {
@@ -372,7 +420,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             //timelineManager.GetInstance().currentTimeline.Evaluate();
             //timelineManager.GetInstance().currentTimeline.Pause();
             dialoguePanel.SetActive(true);
-            ContinueStory();
+            canContinue = true;
         }
     }
 

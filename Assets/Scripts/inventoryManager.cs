@@ -44,6 +44,7 @@ public class inventoryManager : MonoBehaviour, IDataPersistence
             {
                 inventory.Add(itemName, new itemDatas(itemName, typeItem.normal, 0));
             }
+            inventory[itemName].itemCount += count-1;
         }
     }
 

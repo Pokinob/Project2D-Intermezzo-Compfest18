@@ -7,7 +7,7 @@ public class ActiveCutscene : MonoBehaviour
     public PlayableDirector playableDirector;
 
     private bool triggered = false;
-    private bool fadePlay;
+    public bool fadePlay;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,6 +17,7 @@ public class ActiveCutscene : MonoBehaviour
             if(fadePlay)
             {
                 DialogueManager.GetInstance().fadeInScene.Play();
+                DialogueManager.GetInstance().fadeInScene.playableGraph.GetRootPlayable(0).SetSpeed(1.5f);
             }
             StartCoroutine(play());
             triggered = true;
@@ -25,6 +26,7 @@ public class ActiveCutscene : MonoBehaviour
 
     private IEnumerator play()
     {
+        DialogueManager.GetInstance().canContinue = false;
         yield return new WaitUntil(() => DialogueManager.GetInstance().fadeInScene.state != PlayState.Playing);
         timelineManager.GetInstance().playTimeline();
     }
