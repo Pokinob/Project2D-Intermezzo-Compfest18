@@ -1,3 +1,4 @@
+using Ink.UnityIntegration;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,7 @@ public class DialogueTrigger : MonoBehaviour, IDataPersistence
     private bool playerInRange;
 
     [Header("Ink Asset")]
-    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private InkFile inkJSON;
 
     private void Awake()
     {

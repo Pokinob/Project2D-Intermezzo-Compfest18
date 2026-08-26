@@ -12,4 +12,4 @@ VAR P4Digit4= 0
 VAR P7Start = false
 VAR P7Complete = false
 VAR Level = 1
-VAR OpenGate = false
+VAR Open = false

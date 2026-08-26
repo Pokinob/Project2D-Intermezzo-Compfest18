@@ -2,15 +2,16 @@ using UnityEngine;
 using Ink.Runtime;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Ink.UnityIntegration;
 
 public class DialogueVariable : IDataPersistence
 {
     public Dictionary<string, Ink.Runtime.Object> variableDictionary { get; private set; }
     private Story globalVariable;
 
-    public DialogueVariable(TextAsset globalsInkFile, string jsonState = null)
+    public DialogueVariable(InkFile globalsInkFile, string jsonState = null)
     {
-        globalVariable = new Story(globalsInkFile.text);
+        globalVariable = new Story(globalsInkFile.storyJson);
 
         if(jsonState != null)
         {
@@ -23,7 +24,7 @@ public class DialogueVariable : IDataPersistence
         {
             Ink.Runtime.Object value = globalVariable.variablesState.GetVariableWithName(name);
             variableDictionary.Add(name, value);
-            //Debug.Log($"Variable '{name}' initialized with value: {value}");
+            Debug.Log($"Variable '{name}' initialized with value: {value}");
         }
     }
 

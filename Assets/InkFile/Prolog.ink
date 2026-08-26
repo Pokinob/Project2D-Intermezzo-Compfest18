@@ -5,11 +5,18 @@ EXTERNAL StartBattle(enemy)
 EXTERNAL ContinueBattle(turn)
 EXTERNAL OpenGate(level)
 EXTERNAL AddItem(itemName, count)
-->main
-===main===
-!!! #speaker:Unknown #layout:right #portrait:MonbunSpeaker
+->Main
+
+===Main===
+#speaker:Unknown
+#layout:right
+#portrait:MonbunSpeaker
+!!!
 ~continueTimeline()
-Wait #speaker:??? #layout:left #portrait:PlayerSpeaker
+#speaker:???
+#layout:left
+#portrait:PlayerSpeaker
+Wait
 ~continueTimeline()
 #speaker:Unknown
 #portrait:MonbunSpeaker

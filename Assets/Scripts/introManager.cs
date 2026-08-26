@@ -1,3 +1,4 @@
+using Ink.UnityIntegration;
 using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
@@ -8,7 +9,7 @@ public class introManager : MonoBehaviour
     [SerializeField] private GameObject wasdPanel;
     [SerializeField] private GameObject shiftPanel;
     [SerializeField] private TextMeshProUGUI guideText;
-    [SerializeField] private TextAsset inkTutorial;
+    [SerializeField] private InkFile inkTutorial;
     private bool isShiftGetPressed = false;
     private bool isWASDGetPressed = false;
     public static introManager instance;

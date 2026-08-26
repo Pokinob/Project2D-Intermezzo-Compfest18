@@ -2,15 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 using Unity.VisualScripting;
+using Ink.UnityIntegration;
 
 public class QuestManager : MonoBehaviour
 {
     private static QuestManager instance;
     [SerializeField] private List<GameObject> objQuest1;
     [SerializeField] private List<GameObject> objQuest2;
-    [SerializeField] private TextAsset inkFilesP2;
-    [SerializeField] private TextAsset inkFilesP7;
-    [SerializeField] private TextAsset inkFilesP4;
+    [SerializeField] private InkFile inkFilesP2;
+    [SerializeField] private InkFile inkFilesP7;
+    [SerializeField] private InkFile inkFilesP4;
     private void Awake()
     {
         if(instance != null)

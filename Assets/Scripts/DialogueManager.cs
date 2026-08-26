@@ -1,4 +1,5 @@
 using Ink.Runtime;
+using Ink.UnityIntegration;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Principal;
@@ -32,7 +33,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     private const string PORTRAIT_TAG = "portrait";
     private const string LAYOUT_TAG = "layout";
     public DialogueVariable dialogueVariables { get; private set; }
-    [SerializeField] private TextAsset loadglobalsInkFile;
+    [SerializeField] private InkFile loadglobalsInkFile;
     [SerializeField] private PlayableDirector introScene;
 
 
@@ -78,6 +79,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     {
         //ResetTimeline(fadeInScene);
         //StartCoroutine(loadingGame());
+        Debug.Log(loadglobalsInkFile);
         dialogueVariables = new DialogueVariable(loadglobalsInkFile);
     }
 
@@ -119,9 +121,10 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(InkFile inkJSON)
     {   
-        currentStory = new Story(inkJSON.text);
+        //Debug.Log("Enter Dialogue Mode");
+        currentStory = new Story(inkJSON.storyJson);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         dialogueVariables.StartListening(currentStory);
@@ -129,6 +132,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         BindInkExternalFunction();
         canContinue = true;
         dialogueText.text = "";
+        //Debug.Log("Before Continue Story");
         ContinueStory();
     }
 
@@ -146,6 +150,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     private void ContinueStory()
     {
+        //Debug.Log("Continue Story");
         if (isTyping)
         {
             StopCoroutine(typingCoroutine);
@@ -159,16 +164,25 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
         if (currentStory.canContinue)
         {
-            currentText = "";
-            while (currentStory.canContinue && string.IsNullOrEmpty(currentText))
+            //Debug.Log("Continue Story");
+            currentText = currentStory.Continue();
+            if(currentStory.currentTags.Count > 0)
             {
-                currentText = currentStory.Continue();
-                if (currentStory.currentTags.Count > 0)
-                {
-                    StartCoroutine(HandleTags(currentStory.currentTags));
-                    //Debug.Log("This is Tag");
-                }
+                StartCoroutine(HandleTags(currentStory.currentTags));
             }
+            //while (currentStory.canContinue && string.IsNullOrEmpty(currentText))
+            //{
+            //    Debug.Log("Continue Story");
+            //    //Debug.Log(currentStory.Continue());
+            //    currentText = currentStory.Continue();
+            //    Debug.Log("Current Text: " + currentText);
+            //    if (currentStory.currentTags.Count > 0)
+            //    {
+            //        Debug.Log("Tags: " + string.Join(", ", currentStory.currentTags));
+            //        StartCoroutine(HandleTags(currentStory.currentTags));
+            //        //Debug.Log("This is Tag");
+            //    }
+            //}
 
             if (string.IsNullOrEmpty(currentText) && !currentStory.canContinue)
             {
@@ -177,7 +191,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                 return;
             }
 
-            //Debug.Log("Continue Story");
+            Debug.Log("Continue Story2");
             typingCoroutine = StartCoroutine(DisplayText(currentText));
 
         }
@@ -313,6 +327,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
     private IEnumerator HandleTags(List<string> tags)
     {
         yield return new WaitUntil(() => canContinue);
+        //Debug.Log("Handle Tags");
         foreach (string tag in tags)
         {
             string[] splitTag = tag.Split(':');
@@ -322,7 +337,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
             }
             string tagKey = splitTag[0].Trim();
             string tagValue = splitTag[1].Trim();
-            //Debug.Log("Tag Key: " + tagKey + ", Tag Value: " + tagValue);
+            Debug.Log("Tag Key: " + tagKey + ", Tag Value: " + tagValue);
             switch (tagKey)
             {
                 case SPEAKER_TAG:
@@ -331,15 +346,17 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                         {
                             if (((Ink.Runtime.StringValue)dialogueVariables.variableDictionary["MCName"]).value != "???")
                             {
+                                Debug.Log("Ada nama");
                                 namaMc = ((Ink.Runtime.StringValue)dialogueVariables.variableDictionary["MCName"]).value;
                             }
                             if (namaMc != "???")
                             {
+                                //Debug.Log("Tidak ada nama");
                                 speakerNameText.text = namaMc;
                             }
                             else
                             {
-                                //Debug.Log("Blm ada nama");
+                                Debug.Log("Blm ada nama");
                                 speakerNameText.text = "???";
                             }
                         }
@@ -427,7 +444,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void startDialogueTimeline(TextAsset ink)
+    public void startDialogueTimeline(InkFile ink)
     {
         timelineManager.GetInstance().currentTimeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
         //timelineManager.GetInstance().currentTimeline.Evaluate();

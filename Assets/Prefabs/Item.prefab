@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09433a42dcb87ddf865fa26ac23cc15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  inkJSON: {fileID: 4900000, guid: b41418d10d2486e47b0b91323eb54136, type: 3}
+  inkJSON: {fileID: 6231892579173505729, guid: d3ff08ef7a198b34ebcc0e659816a4a3, type: 3}
 --- !u!114 &6434241411494178023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,4 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28df0a0a9d6089429a34c0f8ac6b63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerInRange: 0
   itemObj: {fileID: 11400000, guid: 2e2144beeb8d0364daa835b756f6225b, type: 2}
+  itemID: 
+  itemPuzzle: 0
+  levelItem: 0

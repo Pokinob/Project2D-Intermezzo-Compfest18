@@ -1,9 +1,11 @@
 using Ink.Parsed;
+using Ink.Runtime;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.Playables;
+using Ink.UnityIntegration;
 
 public class SimonSays : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class SimonSays : MonoBehaviour
     private int startIndex = 0;
     private int checkIndex = 0;
     private bool canClick = false;
-    [SerializeField] private TextAsset completeAsset;
+    [SerializeField] private InkFile completeAsset;
     [SerializeField] private List<GameObject> objSequence;
     [SerializeField] private PlayableDirector playCutscene;
     [SerializeField] private PlayableDirector afterCutscene;

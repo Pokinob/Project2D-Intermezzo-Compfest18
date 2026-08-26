@@ -109,9 +109,9 @@ TextureImporter:
         x: 0
         y: 256
         width: 192
-        height: 160
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 144
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -131,9 +131,9 @@ TextureImporter:
         x: 0
         y: 96
         width: 192
-        height: 160
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 149
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,12 +150,12 @@ TextureImporter:
       name: prop_gate_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 31
         y: 0
         width: 128
         height: 96
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
