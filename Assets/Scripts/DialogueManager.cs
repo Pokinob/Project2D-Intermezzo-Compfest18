@@ -83,7 +83,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
 
     IEnumerator showMainPanel()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         PanelManager.GetInstance().mainPanel.SetActive(true);
     }
     IEnumerator loadingGame()
@@ -92,7 +92,7 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
         beforeStartGame.Stop();
         fadeOutScene.Play();
         yield return new WaitForSeconds(0.2f);
-        //introScene.Play();
+        introScene.Play();
     }
 
     public static DialogueManager GetInstance()
@@ -350,8 +350,11 @@ public class DialogueManager : MonoBehaviour, IDataPersistence
                         break;
                     }
                 case PORTRAIT_TAG:
-                    portraitAnimator.Play(tagValue);
-                    break;
+                    {
+                        Debug.Log("changeImg: " + tagValue);
+                        portraitAnimator.Play(tagValue);
+                        break;
+                    }
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);
                     break;

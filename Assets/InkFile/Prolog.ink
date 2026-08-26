@@ -175,18 +175,18 @@ What do I need to do to help you?
 It's easy
 Follow me for a moment
 ~continueTimeline()
-...
-This is the gate #portrait:MonbunSpeaker
+... #layout:right #portrait:MonbunSpeaker
+This is the gate
 I can show you specific locations through this gate
 And you need to collect eight items at each location you enter.
 #speaker:???
 #layout:left
 #portrait:PlayerSpeaker
-Eight items, what item?
+Eight items, what items?
 #speaker:Monbun
 #layout:right
 #portrait:MonbunSpeaker
-The item is a ball sealed within a certain area.
+The items are the balls sealed within a certain area.
 #speaker:???
 #layout:left
 #portrait:PlayerSpeaker
@@ -221,7 +221,7 @@ I'll teach you a spell that can defeat those shadows
 ~continueTimeline()
 ~StartBattle(0)
 ~ContinueBattle(false)
-...
+... #layout:right #portrait:MonbunSpeaker
 So you can do anything during your turn
 You can use skills to attack, heal, and stun
 You can also use counter to reduce the damage you take, and...
@@ -230,9 +230,9 @@ Here are also items you can use during battle
 But the only item I’ve gotten so far on this journey is this heal
 ~AddItem("Potion", 5)
 You Get 5 Potion #layout:hide
-Though I’m sure it’ll come in handy for you later #layout:right
+Though I’m sure it’ll come in handy for you later #layout:right #portrait:MonbunSpeaker
 ~ContinueBattle(true)
-...
+... #layout:right #portrait:MonbunSpeaker
 Nice!!!
 I knew you have the potential
 #speaker:???
@@ -247,7 +247,7 @@ I think you're ready for this
 Are you ready to go?
 * [Yes]
 ->Yes
-* [Hold on a minute]
+* [Wait]
 ->No
 
 ===Yes===
